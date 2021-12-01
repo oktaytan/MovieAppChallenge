@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		662075872757808A0021D251 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662075862757808A0021D251 /* AppRouter.swift */; };
+		6620758A275781470021D251 /* MovieListBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66207589275781470021D251 /* MovieListBuilder.swift */; };
+		6620758C275781A50021D251 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620758B275781A50021D251 /* MovieListViewController.swift */; };
+		6620758E275782150021D251 /* MovieListContracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620758D275782150021D251 /* MovieListContracts.swift */; };
+		6620759A275789C50021D251 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66207599275789C50021D251 /* NetworkService.swift */; };
+		6620759C27578FA10021D251 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620759B27578FA10021D251 /* Search.swift */; };
+		6620759E27578FFF0021D251 /* Failure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620759D27578FFF0021D251 /* Failure.swift */; };
+		662075A0275790250021D251 /* EndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6620759F275790250021D251 /* EndPoints.swift */; };
+		662075A2275791A60021D251 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662075A1275791A60021D251 /* Movie.swift */; };
 		6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDB2756A0F600689B4F /* AppDelegate.swift */; };
 		6662FFDE2756A0F600689B4F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDD2756A0F600689B4F /* SceneDelegate.swift */; };
 		6662FFE62756A0F600689B4F /* InvioChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFE42756A0F600689B4F /* InvioChallenge.xcdatamodeld */; };
@@ -15,6 +24,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		662075862757808A0021D251 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		66207589275781470021D251 /* MovieListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListBuilder.swift; sourceTree = "<group>"; };
+		6620758B275781A50021D251 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
+		6620758D275782150021D251 /* MovieListContracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListContracts.swift; sourceTree = "<group>"; };
+		66207599275789C50021D251 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		6620759B27578FA10021D251 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		6620759D27578FFF0021D251 /* Failure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Failure.swift; sourceTree = "<group>"; };
+		6620759F275790250021D251 /* EndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoints.swift; sourceTree = "<group>"; };
+		662075A1275791A60021D251 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		6662FFD82756A0F600689B4F /* InvioChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvioChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6662FFDB2756A0F600689B4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6662FFDD2756A0F600689B4F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +53,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		662075852757802D0021D251 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				662075882757812E0021D251 /* MovieList */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		662075882757812E0021D251 /* MovieList */ = {
+			isa = PBXGroup;
+			children = (
+				66207589275781470021D251 /* MovieListBuilder.swift */,
+				6620758B275781A50021D251 /* MovieListViewController.swift */,
+				6620758D275782150021D251 /* MovieListContracts.swift */,
+			);
+			path = MovieList;
+			sourceTree = "<group>";
+		};
+		6620758F275782CF0021D251 /* MovieService */ = {
+			isa = PBXGroup;
+			children = (
+				6620759D27578FFF0021D251 /* Failure.swift */,
+				6620759F275790250021D251 /* EndPoints.swift */,
+				66207599275789C50021D251 /* NetworkService.swift */,
+			);
+			path = MovieService;
+			sourceTree = "<group>";
+		};
+		66207592275784720021D251 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6620759B27578FA10021D251 /* Search.swift */,
+				662075A1275791A60021D251 /* Movie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		6662FFCF2756A0F500689B4F = {
 			isa = PBXGroup;
 			children = (
@@ -54,7 +109,10 @@
 		6662FFDA2756A0F600689B4F /* InvioChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				6620758F275782CF0021D251 /* MovieService */,
+				66207592275784720021D251 /* Models */,
 				6662FFF42756A19C00689B4F /* App */,
+				662075852757802D0021D251 /* Screens */,
 				6662FFF52756A20300689B4F /* Supporting Files */,
 				6662FFF62756A22C00689B4F /* Resources */,
 				6662FFF72756A28800689B4F /* CoreData */,
@@ -67,6 +125,7 @@
 			children = (
 				6662FFDB2756A0F600689B4F /* AppDelegate.swift */,
 				6662FFDD2756A0F600689B4F /* SceneDelegate.swift */,
+				662075862757808A0021D251 /* AppRouter.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -166,9 +225,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6620759E27578FFF0021D251 /* Failure.swift in Sources */,
+				6620759A275789C50021D251 /* NetworkService.swift in Sources */,
+				662075872757808A0021D251 /* AppRouter.swift in Sources */,
+				662075A2275791A60021D251 /* Movie.swift in Sources */,
+				6620759C27578FA10021D251 /* Search.swift in Sources */,
 				6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */,
 				6662FFDE2756A0F600689B4F /* SceneDelegate.swift in Sources */,
+				6620758C275781A50021D251 /* MovieListViewController.swift in Sources */,
 				6662FFE62756A0F600689B4F /* InvioChallenge.xcdatamodeld in Sources */,
+				6620758A275781470021D251 /* MovieListBuilder.swift in Sources */,
+				6620758E275782150021D251 /* MovieListContracts.swift in Sources */,
+				662075A0275790250021D251 /* EndPoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
