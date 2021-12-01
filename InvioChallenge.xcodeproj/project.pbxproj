@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDB2756A0F600689B4F /* AppDelegate.swift */; };
 		6662FFDE2756A0F600689B4F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDD2756A0F600689B4F /* SceneDelegate.swift */; };
-		6662FFE02756A0F600689B4F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDF2756A0F600689B4F /* ViewController.swift */; };
-		6662FFE32756A0F600689B4F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6662FFE12756A0F600689B4F /* Main.storyboard */; };
 		6662FFE62756A0F600689B4F /* InvioChallenge.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFE42756A0F600689B4F /* InvioChallenge.xcdatamodeld */; };
 		6662FFE82756A0FB00689B4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6662FFE72756A0FB00689B4F /* Assets.xcassets */; };
 		6662FFEB2756A0FB00689B4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6662FFE92756A0FB00689B4F /* LaunchScreen.storyboard */; };
@@ -20,8 +18,6 @@
 		6662FFD82756A0F600689B4F /* InvioChallenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InvioChallenge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6662FFDB2756A0F600689B4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6662FFDD2756A0F600689B4F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6662FFDF2756A0F600689B4F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		6662FFE22756A0F600689B4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6662FFE52756A0F600689B4F /* InvioChallenge.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InvioChallenge.xcdatamodel; sourceTree = "<group>"; };
 		6662FFE72756A0FB00689B4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6662FFEA2756A0FB00689B4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,16 +54,46 @@
 		6662FFDA2756A0F600689B4F /* InvioChallenge */ = {
 			isa = PBXGroup;
 			children = (
-				6662FFDB2756A0F600689B4F /* AppDelegate.swift */,
-				6662FFDD2756A0F600689B4F /* SceneDelegate.swift */,
-				6662FFDF2756A0F600689B4F /* ViewController.swift */,
-				6662FFE12756A0F600689B4F /* Main.storyboard */,
-				6662FFE72756A0FB00689B4F /* Assets.xcassets */,
-				6662FFE92756A0FB00689B4F /* LaunchScreen.storyboard */,
-				6662FFEC2756A0FB00689B4F /* Info.plist */,
-				6662FFE42756A0F600689B4F /* InvioChallenge.xcdatamodeld */,
+				6662FFF42756A19C00689B4F /* App */,
+				6662FFF52756A20300689B4F /* Supporting Files */,
+				6662FFF62756A22C00689B4F /* Resources */,
+				6662FFF72756A28800689B4F /* CoreData */,
 			);
 			path = InvioChallenge;
+			sourceTree = "<group>";
+		};
+		6662FFF42756A19C00689B4F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				6662FFDB2756A0F600689B4F /* AppDelegate.swift */,
+				6662FFDD2756A0F600689B4F /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		6662FFF52756A20300689B4F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6662FFE92756A0FB00689B4F /* LaunchScreen.storyboard */,
+				6662FFEC2756A0FB00689B4F /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6662FFF62756A22C00689B4F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6662FFE72756A0FB00689B4F /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		6662FFF72756A28800689B4F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				6662FFE42756A0F600689B4F /* InvioChallenge.xcdatamodeld */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,7 +156,6 @@
 			files = (
 				6662FFEB2756A0FB00689B4F /* LaunchScreen.storyboard in Resources */,
 				6662FFE82756A0FB00689B4F /* Assets.xcassets in Resources */,
-				6662FFE32756A0F600689B4F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,7 +166,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6662FFE02756A0F600689B4F /* ViewController.swift in Sources */,
 				6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */,
 				6662FFDE2756A0F600689B4F /* SceneDelegate.swift in Sources */,
 				6662FFE62756A0F600689B4F /* InvioChallenge.xcdatamodeld in Sources */,
@@ -151,14 +175,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		6662FFE12756A0F600689B4F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6662FFE22756A0F600689B4F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		6662FFE92756A0FB00689B4F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -295,12 +311,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TN6PW5B825;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = InvioChallenge/Info.plist;
+				INFOPLIST_FILE = "InvioChallenge/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,12 +340,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = TN6PW5B825;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = InvioChallenge/Info.plist;
+				INFOPLIST_FILE = "InvioChallenge/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
