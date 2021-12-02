@@ -15,8 +15,7 @@ final class SearchField: UISearchBar  {
     }
     
     fileprivate func setupView() {
-        self.backgroundColor = .bgColor
-        self.placeholder = "Type a title"
+        self.placeholder = "Search Movie"
         self.tintColor = .primaryColor
         self.searchTextField.backgroundColor = .bgColor
         self.searchBarStyle = .minimal

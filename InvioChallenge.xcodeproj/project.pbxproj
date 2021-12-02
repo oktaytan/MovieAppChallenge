@@ -32,6 +32,9 @@
 		66E9876527582D9700C9947C /* TopNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E9876427582D9700C9947C /* TopNavigationView.swift */; };
 		66E987672758369C00C9947C /* WelcomeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E987662758369C00C9947C /* WelcomeText.swift */; };
 		66E987692758396F00C9947C /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E987682758396F00C9947C /* SearchField.swift */; };
+		66EFD4D52759033D00786646 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4D42759033D00786646 /* LoadingIndicatorView.swift */; };
+		66EFD4DB27590B3700786646 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4DA27590B3700786646 /* BaseCollectionViewCell.swift */; };
+		66EFD4DD27590BBB00786646 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4DC27590BBB00786646 /* MovieCollectionCell.swift */; };
 		6A9A402865AE1D930E4D6F45 /* Pods_InvioChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C159E875628B2E6466F22D35 /* Pods_InvioChallenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		66E9876427582D9700C9947C /* TopNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationView.swift; sourceTree = "<group>"; };
 		66E987662758369C00C9947C /* WelcomeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeText.swift; sourceTree = "<group>"; };
 		66E987682758396F00C9947C /* SearchField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchField.swift; sourceTree = "<group>"; };
+		66EFD4D42759033D00786646 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
+		66EFD4DA27590B3700786646 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		66EFD4DC27590BBB00786646 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCollectionCell.swift; sourceTree = "<group>"; };
 		67C211053FA29FECB8F144CC /* Pods-InvioChallenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvioChallenge.debug.xcconfig"; path = "Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge.debug.xcconfig"; sourceTree = "<group>"; };
 		C159E875628B2E6466F22D35 /* Pods_InvioChallenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvioChallenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -240,6 +246,9 @@
 				66E9876427582D9700C9947C /* TopNavigationView.swift */,
 				66E987662758369C00C9947C /* WelcomeText.swift */,
 				66E987682758396F00C9947C /* SearchField.swift */,
+				66EFD4D42759033D00786646 /* LoadingIndicatorView.swift */,
+				66EFD4DA27590B3700786646 /* BaseCollectionViewCell.swift */,
+				66EFD4DC27590BBB00786646 /* MovieCollectionCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -361,6 +370,7 @@
 				66207623275812270021D251 /* MovieDetailBuilder.swift in Sources */,
 				66E987672758369C00C9947C /* WelcomeText.swift in Sources */,
 				662075872757808A0021D251 /* AppRouter.swift in Sources */,
+				66EFD4D52759033D00786646 /* LoadingIndicatorView.swift in Sources */,
 				662075A2275791A60021D251 /* MovieDetail.swift in Sources */,
 				662075B32757BE320021D251 /* NetworkService.swift in Sources */,
 				6620761E2757F7470021D251 /* CoreDataService.swift in Sources */,
@@ -368,6 +378,7 @@
 				6620759C27578FA10021D251 /* Search.swift in Sources */,
 				66E9875C27582AA200C9947C /* UIColor+Extensions.swift in Sources */,
 				6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */,
+				66EFD4DB27590B3700786646 /* BaseCollectionViewCell.swift in Sources */,
 				66E987692758396F00C9947C /* SearchField.swift in Sources */,
 				6620758C275781A50021D251 /* MovieListViewController.swift in Sources */,
 				662075B92757CB530021D251 /* AppContainer.swift in Sources */,
@@ -377,6 +388,7 @@
 				66E9876227582C4600C9947C /* UIStackView+Extension.swift in Sources */,
 				6662FFE62756A0F600689B4F /* InvioChallenge.xcdatamodeld in Sources */,
 				66207625275812460021D251 /* MovieDetailViewController.swift in Sources */,
+				66EFD4DD27590BBB00786646 /* MovieCollectionCell.swift in Sources */,
 				6620758A275781470021D251 /* MovieListBuilder.swift in Sources */,
 				662076272758127C0021D251 /* MovieDetailViewModel.swift in Sources */,
 				662075A0275790250021D251 /* EndPoints.swift in Sources */,

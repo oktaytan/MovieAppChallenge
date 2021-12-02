@@ -16,20 +16,20 @@ final class TopNavigationView: UIView {
     }
     
     lazy var menuButton: UIButton = {
-        let btn = UIButton(type: .system)
+        let btn = UIButton(type: .custom)
         let image = UIImage(named: "menuIcon")
         btn.setBackgroundImage(image, for: .normal)
         return btn
     }()
     
-    lazy var userPhoto: UIImageView = {
-        let view = UIImageView()
+    lazy var userPhoto: UIButton = {
+        let btn = UIButton(type: .custom)
         let image = UIImage(named: "userPhoto")
-        view.image = image
-        view.layer.cornerRadius = 16
-        view.clipsToBounds = true
-        view.contentMode = .scaleAspectFit
-        return view
+        btn.setBackgroundImage(image, for: .normal)
+        btn.layer.cornerRadius = 16
+        btn.clipsToBounds = true
+        btn.contentMode = .scaleAspectFit
+        return btn
     }()
     
     fileprivate func setupHierarchy() {

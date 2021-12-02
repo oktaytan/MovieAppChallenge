@@ -17,7 +17,7 @@ final class WelcomeText: UIStackView {
     
     lazy var helloText: UILabel = {
         let label = UILabel()
-        label.text = "Hello Cawis"
+        label.text = "Hello Oktay"
         label.font = .systemFont(ofSize: 30, weight: .semibold)
         label.textColor = .textColor
         return label
@@ -26,7 +26,7 @@ final class WelcomeText: UIStackView {
     lazy var searchText: UILabel = {
         let label = UILabel()
         label.text = "Find your favorite movies"
-        label.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
+        label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .subTextColor
         return label
     }()
