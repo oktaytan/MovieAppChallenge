@@ -16,7 +16,11 @@ final class SearchField: UISearchBar  {
     
     fileprivate func setupView() {
         self.backgroundColor = .bgColor
-        self.placeholder = "Search"
+        self.placeholder = "Type a title"
+        self.tintColor = .primaryColor
+        self.searchTextField.backgroundColor = .bgColor
+        self.searchBarStyle = .minimal
+        self.backgroundColor = .none
     }
     
     required init?(coder: NSCoder) {

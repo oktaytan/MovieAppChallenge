@@ -25,7 +25,7 @@ final class WelcomeText: UIStackView {
     
     lazy var searchText: UILabel = {
         let label = UILabel()
-        label.text = "Search your favorite movies"
+        label.text = "Find your favorite movies"
         label.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
         label.textColor = .subTextColor
         return label
