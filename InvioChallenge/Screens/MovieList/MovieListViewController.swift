@@ -11,10 +11,10 @@ final class MovieListViewController: UIViewController {
     
     var viewModel: MovieListViewModel!
     
-    private let topMenu = TopNavigationView()
-    private let welcomeText = WelcomeText()
-    private let searchField = SearchField()
-    private let loadingView = LoadingIndicatorView()
+    let topMenu = TopNavigationView()
+    let welcomeText = WelcomeText()
+    let searchField = SearchField()
+    let loadingView = LoadingIndicatorView()
     
     var movies: [Movie] = [
         .init(id: "1", title: "The Matrix", year: "1993", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
@@ -50,14 +50,6 @@ final class MovieListViewController: UIViewController {
         return collectionView
     }()
     
-    lazy var popularTitle: UILabel = {
-        let label = UILabel()
-        label.text = "Popular"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .textColor
-        return label
-    }()
-    
     override func viewDidLoad() {
         setupView()
         setupHierarchy()
@@ -72,7 +64,9 @@ final class MovieListViewController: UIViewController {
     
     fileprivate func setupView() {
         view.backgroundColor = .white
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(endingSearch))
+        let tapGesture = UISwipeGestureRecognizer(target: self, action: #selector(endingSearch))
+        tapGesture.direction = .down
+        tapGesture.numberOfTouchesRequired = 1
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -115,61 +109,8 @@ final class MovieListViewController: UIViewController {
     
 }
 
-extension MovieListViewController: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-    }
-    
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.setShowsCancelButton(true, animated: true)
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
-            topMenu.transform = CGAffineTransform(translationX: 0, y: -30)
-            topMenu.alpha = 0
-            welcomeText.transform = CGAffineTransform(translationX: 0, y: -30)
-            welcomeText.alpha = 0
-            searchFieldTopAnchor?.isActive = false
-            searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20)
-            searchFieldTopAnchor?.isActive = true
-            searchDescription.alpha = 1
-            recentlyTitle.alpha = 0
-            recentlyCollection.alpha = 0
-            view.layoutIfNeeded()
-        }, completion: nil)
 
-        return true
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.closeSearch(searchBar)
-    }
-    
-    fileprivate func closeSearch(_ searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.searchTextField.resignFirstResponder()
-        searchBar.searchTextField.text = ""
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
-            topMenu.transform = .identity
-            topMenu.alpha = 1
-            welcomeText.transform = .identity
-            welcomeText.alpha = 1
-            searchFieldTopAnchor?.isActive = false
-            searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: welcomeText.bottomAnchor, constant: 11)
-            searchFieldTopAnchor?.isActive = true
-            searchDescription.alpha = 0
-            recentlyTitle.alpha = 1
-            recentlyCollection.alpha = 1
-            view.layoutIfNeeded()
-        }, completion: nil)
-        
-    }
-    
-    @objc func endingSearch() {
-        self.closeSearch(searchField)
-    }
-}
-
-
+// MARK: - Recently Searches Delegation
 extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -195,7 +136,8 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let _ = self.movies[indexPath.item]
+        let movie = self.movies[indexPath.item]
+        print(movie.id)
     }
 
     
