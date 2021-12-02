@@ -26,6 +26,7 @@ extension MovieListViewController: UISearchBarDelegate {
             searchDescription.alpha = 1
             recentlyTitle.alpha = 0
             recentlyCollection.alpha = 0
+            notFoundView.alpha = 0
             view.layoutIfNeeded()
         }, completion: nil)
 

@@ -15,6 +15,7 @@ final class MovieListViewController: UIViewController {
     let welcomeText = WelcomeText()
     let searchField = SearchField()
     let loadingView = LoadingIndicatorView()
+    let notFoundView = MovieNotFoundView()
     
     var movies: [Movie] = [
         .init(id: "1", title: "The Matrix", year: "1993", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
@@ -73,6 +74,7 @@ final class MovieListViewController: UIViewController {
     fileprivate func setupHierarchy() {
         view.addSubview(topMenu)
         view.addSubview(welcomeText)
+        view.addSubview(notFoundView)
         view.addSubview(searchField)
         view.addSubview(searchDescription)
         view.addSubview(loadingView)
@@ -105,6 +107,31 @@ final class MovieListViewController: UIViewController {
         
         recentlyCollection.anchor(top: recentlyTitle.bottomAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, padding: .init(top: 24, left: 0, bottom: 0, right: 0))
         recentlyCollection.constraintHeight(290)
+        
+        notFoundView.centerWithSuperview(size: .init(width: self.view.bounds.width, height: 100))
+        notFoundView.alpha = 0
+    }
+    
+    fileprivate func notFoundShow() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+            self.recentlyTitle.alpha = 0
+            self.recentlyCollection.alpha = 0
+            self.view.addSubview(self.notFoundView)
+        } completion: { _ in
+            self.recentlyTitle.removeFromSuperview()
+            self.recentlyCollection.removeFromSuperview()
+            self.notFoundView.alpha = 1
+        }
+    }
+    
+    fileprivate func notFoundHide() {
+        UIView.animate(withDuration: 0.3, delay: 5, options: .curveEaseInOut) {
+            self.notFoundView.alpha = 0
+            self.recentlyTitle.alpha = 1
+            self.recentlyCollection.alpha = 1
+        } completion: { _ in
+            self.notFoundView.removeFromSuperview()
+        }
     }
     
 }
@@ -138,6 +165,7 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie = self.movies[indexPath.item]
         print(movie.id)
+        notFoundShow()
     }
 
     
