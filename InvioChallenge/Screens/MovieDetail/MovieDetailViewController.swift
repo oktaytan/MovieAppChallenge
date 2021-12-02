@@ -9,6 +9,12 @@ import UIKit
 
 final class MovieDetailViewController: UIViewController {
     
+    var movieDetail: MovieDetail? {
+        didSet {
+            guard let detail = movieDetail else { return }
+        }
+    }
+    
     var viewModel: MovieDetailViewModel? {
         didSet {
             
