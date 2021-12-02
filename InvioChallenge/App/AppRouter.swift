@@ -9,14 +9,20 @@ import UIKit
 
 final class AppRouter {
     
-    let window: UIWindow
+    var window: UIWindow?
     
-    init() {
-        window = UIWindow(frame: UIScreen.main.bounds)
+    func start(_ windowScene: UIWindowScene) {
+        window = UIWindow(windowScene: windowScene)
+        window?.makeKeyAndVisible()
+        let viewController = MovieListViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        guard let window = window else { return }
+        window.rootViewController = navigationController
+        window.makeKeyAndVisible()
     }
     
-    func start() {
-        let viewController = MovieListBuilder.make()
+    func goToDetail() {
+        
     }
     
 }

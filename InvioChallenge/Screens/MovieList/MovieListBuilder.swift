@@ -11,6 +11,8 @@ final class MovieListBuilder {
     
     static func make() -> MovieListViewController {
         let viewController = MovieListViewController()
+        viewController.viewModel = MovieListViewModel(service: app.service)
+        return viewController
     }
     
 }

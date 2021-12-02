@@ -8,7 +8,8 @@
 import Foundation
     
 // Search Model
-struct Search: Codable {
+struct Search: Decodable {
+    
     let results: [Movie]?
     let totalResults: String?
     let response: String
@@ -21,21 +22,6 @@ struct Search: Codable {
         case error = "Error"
     }
     
-    struct Movie: Codable {
-        let title: String
-        let year: String
-        let imdbID: String
-        let type: String
-        let poster: String
-  
-        private enum CodingKeys: String, CodingKey {
-            case title = "Title"
-            case year = "Year"
-            case imdbID
-            case type = "Type"
-            case poster = "Poster"
-        }
-        
-    }
+   
 }
 

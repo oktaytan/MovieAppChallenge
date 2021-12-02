@@ -12,7 +12,7 @@ enum EndPoints {
 }
 
 extension EndPoints {
-    var path:String {
+    var path: String {
         let baseURL = "http://www.omdbapi.com"
         
         struct Section {
@@ -22,7 +22,6 @@ extension EndPoints {
         switch(self) {
         case .Search:
             return "\(baseURL)\(Section.search)"
-
         }
         
     }
