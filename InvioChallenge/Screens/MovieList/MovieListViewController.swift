@@ -22,11 +22,9 @@ final class MovieListViewController: UIViewController {
             if isLoading {
                 self.recentlyTitle.alpha = 0
                 self.recentlyCollection.alpha = 0
-                print(isLoading)
             } else {
                 self.recentlyTitle.alpha = 1
                 self.recentlyCollection.alpha = 1
-                print(isLoading)
             }
         }
     }
@@ -73,7 +71,8 @@ final class MovieListViewController: UIViewController {
         
         self.isLoading = true
         self.loadingView.isLoading = true
-        app.service.fetchMovies(for: "friends", page: 1) { search, error in
+        
+        app.service.fetchMovies(for: "gully", page: 1) { search, error in
             if let error = error {
                 print(error.localizedDescription)
                 return

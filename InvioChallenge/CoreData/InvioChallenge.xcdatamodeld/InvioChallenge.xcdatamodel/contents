@@ -3,7 +3,11 @@
     <entity name="LastSearchTitle" representedClassName="LastSearchTitle" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="MovieLike" representedClassName="MovieLike" syncable="YES" codeGenerationType="class">
+        <attribute name="isLike" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+    </entity>
     <elements>
         <element name="LastSearchTitle" positionX="-63" positionY="-18" width="128" height="44"/>
+        <element name="MovieLike" positionX="-63" positionY="-9" width="128" height="44"/>
     </elements>
 </model>

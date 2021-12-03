@@ -28,4 +28,8 @@ final class AppRouter {
         navigationController.pushViewController(detailViewController, animated: true)
     }
     
+    func goToMovieList() {
+        navigationController.popViewController(animated: true)
+    }
+    
 }

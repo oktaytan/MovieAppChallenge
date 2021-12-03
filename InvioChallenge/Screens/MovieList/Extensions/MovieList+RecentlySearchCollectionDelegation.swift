@@ -40,7 +40,6 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             }
             
             guard let detail = data else { return }
-            print(detail)
             app.router.goToDetail(detail)
         }
     }

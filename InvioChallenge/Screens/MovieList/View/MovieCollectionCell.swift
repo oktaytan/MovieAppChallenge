@@ -24,7 +24,9 @@ final class MovieCollectionCell: BaseCollectionViewCell {
                     print(error.localizedDescription)
                     return
                 }
-                self.moviePoster.image = image
+                DispatchQueue.main.async {
+                    self.moviePoster.image = image ?? UIImage(named: "no_photo")
+                }
             }
         }
     }
@@ -54,7 +56,7 @@ final class MovieCollectionCell: BaseCollectionViewCell {
     }()
     
     lazy var likeButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         let largeFont = UIFont.systemFont(ofSize: 20)
         let configuration = UIImage.SymbolConfiguration(font: largeFont)
         let image = UIImage(systemName: "star.fill", withConfiguration: configuration)

@@ -9,51 +9,73 @@ import UIKit
 
 final class DetailTopNavigationView: UIView {
     
+    private var isLike: Bool = false
+    
     init() {
         super.init(frame: .zero)
         setupHierarchy()
         setupLayout()
     }
     
-    lazy var menuButton: UIButton = {
-        let btn = UIButton(type: .custom)
-        let image = UIImage(named: "menuIcon")
+    lazy var backButton: UIButton = {
+        let btn = UIButton(type: .system)
+        let image = UIImage(named: "leftArrow")
         btn.setBackgroundImage(image, for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         return btn
     }()
     
-    lazy var userPhoto: UIButton = {
-        let btn = UIButton(type: .custom)
-        let image = UIImage(named: "userPhoto")
+    lazy var movieTitle: UILabel = {
+        let label = UILabel()
+        label.text = "The Matrix"
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textColor = .textColor
+        return label
+    }()
+    
+    lazy var likeButton: UIButton = {
+        let btn = UIButton(type: .system)
+        let largeFont = UIFont.systemFont(ofSize: 24)
+        let configuration = UIImage.SymbolConfiguration(font: largeFont)
+        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
         btn.setBackgroundImage(image, for: .normal)
-        btn.layer.cornerRadius = 16
-        btn.clipsToBounds = true
+        btn.tintColor = self.isLike ? .secondaryColor : .bgColor
         btn.contentMode = .scaleAspectFit
+        btn.addTarget(self, action: #selector(like), for: .touchUpInside)
         return btn
     }()
     
     fileprivate func setupHierarchy() {
-        addSubview(menuButton)
-        addSubview(userPhoto)
+        self.addSubview(backButton)
+        self.addSubview(movieTitle)
+        self.addSubview(likeButton)
     }
     
     fileprivate func setupLayout() {
-        menuButton.constraintWidth(22)
-        menuButton.constraintHeight(22)
-        menuButton.centerYSuperView()
-        menuButton.anchor(top: nil, bottom: nil, leading: self.leadingAnchor, trailing: nil)
+        backButton.anchor(top: nil, bottom: nil, leading: leadingAnchor, trailing: nil)
+        backButton.centerYSuperView()
+        backButton.constraintWidth(24)
+        backButton.constraintHeight(20)
         
-        userPhoto.constraintWidth(45)
-        userPhoto.constraintHeight(45)
-        userPhoto.centerYSuperView()
-        userPhoto.anchor(top: nil, bottom: nil, leading: nil, trailing: self.trailingAnchor)
+        movieTitle.centerWithSuperview()
         
-        self.constraintHeight(45)
+        likeButton.anchor(top: nil, bottom: nil, leading: nil, trailing: trailingAnchor)
+        likeButton.centerYSuperView()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func like() {
+        self.isLike.toggle()
+        self.likeButton.tintColor = self.isLike ? .secondaryColor : .bgColor
+    }
+    
+    @objc func goBack() {
+        app.router.goToMovieList()
+    }
 }
 

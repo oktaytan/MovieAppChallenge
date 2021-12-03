@@ -16,14 +16,14 @@ final class TopNavigationView: UIView {
     }
     
     lazy var menuButton: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         let image = UIImage(named: "menuIcon")
         btn.setBackgroundImage(image, for: .normal)
         return btn
     }()
     
     lazy var userPhoto: UIButton = {
-        let btn = UIButton(type: .custom)
+        let btn = UIButton(type: .system)
         let image = UIImage(named: "userPhoto")
         btn.setBackgroundImage(image, for: .normal)
         btn.layer.cornerRadius = 16
