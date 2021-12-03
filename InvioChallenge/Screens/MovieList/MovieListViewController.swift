@@ -7,107 +7,119 @@
 
 import UIKit
 
-final class MovieListViewController: UIViewController {
+final class MovieListViewController: UICollectionViewController {
     
     var viewModel: MovieListViewModel!
     
-    let topMenu = TopNavigationView()
-    let welcomeText = WelcomeText()
-    let searchField = SearchField()
-    let loadingView = LoadingIndicatorView()
-    let notFoundView = MovieNotFoundView()
-    var searchFieldTopAnchor: NSLayoutConstraint?
-    
-    var isLoading: Bool = false {
-        didSet {
-            if isLoading {
-                self.recentlyTitle.alpha = 0
-                self.recentlyCollection.alpha = 0
-            } else {
-                self.recentlyTitle.alpha = 1
-                self.recentlyCollection.alpha = 1
-            }
-        }
-    }
-    
-    var movies: [Movie] = []
-    
-    lazy var searchDescription: UILabel = {
-        let label = UILabel()
-        label.text = "Type the name of the movie you want to search"
-        label.font = .preferredFont(forTextStyle: .subheadline)
-        label.textAlignment = .center
-        label.textColor = .subTextColor
-        label.numberOfLines = 2
-        label.alpha = 0
-        return label
-    }()
-    
-    lazy var recentlyTitle: UILabel = {
-        let label = UILabel()
-        label.text = "Recently searches"
-        label.font = .preferredFont(forTextStyle: .headline)
-        label.textColor = .textColor
-        return label
-    }()
-    
-    lazy var recentlyCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-        collectionView.contentInset = .init(top: 0, left: 24, bottom: 0, right: 24)
-        return collectionView
-    }()
+    var movies: [Movie] = [
+        .init(id: "1", title: "The Matrix", year: "1993", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
+        .init(id: "2", title: "The Matrix Reloaded", year: "2003", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BODE0MzZhZTgtYzkwYi00YmI5LThlZWYtOWRmNWE5ODk0NzMxXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
+        .init(id: "3", title: "The Matrix Revolutions", year: "2003", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzNlZTZjMDctZjYwNi00NzljLWIwN2QtZWZmYmJiYzQ0MTk2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"),
+        .init(id: "4", title: "The Matrix Revisited", year: "2001", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BMTkzNjg3NjE4N15BMl5BanBnXkFtZTgwNTc3NTAwNzE@._V1_SX300.jpg")
+    ]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         setupView()
         setupHierarchy()
         setupLayout()
+    }
+    
+    func setupView() {
+        view.backgroundColor = .white
+        collectionView.isScrollEnabled = true
+        collectionView.alwaysBounceVertical = true
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(endingSearch))
+        swipeGesture.direction = .down
+        swipeGesture.numberOfTouchesRequired = 1
+        collectionView.addGestureRecognizer(swipeGesture)
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.id)
+        collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCell.id)
+    }
+    
+    func setupHierarchy() {
         
-        searchField.delegate = self
+    }
+    
+    func setupLayout() {
         
-        recentlyCollection.delegate = self
-        recentlyCollection.dataSource = self
-        recentlyCollection.register(MovieCollectionCell.self, forCellWithReuseIdentifier: MovieCollectionCell.cellID)
+    }
+}
+
+
+
+extension MovieListViewController: UICollectionViewDelegateFlowLayout {
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.movies.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 24
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.id, for: indexPath) as? MovieCell else { return UICollectionViewCell() }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return .init(width: view.frame.width, height: 122)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        self.isLoading = true
-        self.loadingView.isLoading = true
-        
-        app.service.fetchMovies(for: "matrix", page: 1) { search, error in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
+        if kind == UICollectionView.elementKindSectionHeader {
             
-            guard let movies = search, let results = movies.results else { return }
-            DispatchQueue.main.async {
-                self.movies = results
-                self.recentlyCollection.reloadData()
-                self.isLoading = false
-                self.loadingView.isLoading = false
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCell.id, for: indexPath) as? HeaderCell else { return UICollectionReusableView() }
+            header.delegate = self
+            return header
+        }
+        
+        return UICollectionReusableView()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return .init(width: view.frame.width, height: 280)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        app.router.goToDetail("1")
+    }
+    
+}
+
+
+
+extension MovieListViewController: SearchBarActiveDelegation {
+    
+    func searchBegin() {
+        collectionView.isScrollEnabled = false
+        collectionView.subviews.forEach { item in
+            if let cell = item as? MovieCell {
+                cell.isHidden = true
             }
         }
     }
     
-    fileprivate func notFoundShow() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
-            self.recentlyTitle.alpha = 0
-            self.recentlyCollection.alpha = 0
-            self.view.addSubview(self.notFoundView)
-        } completion: { _ in
-            self.recentlyTitle.removeFromSuperview()
-            self.recentlyCollection.removeFromSuperview()
-            self.notFoundView.alpha = 1
+    func searchEnd() {
+        collectionView.isScrollEnabled = true
+        collectionView.subviews.forEach { item in
+            if let cell = item as? MovieCell {
+                cell.isHidden = false
+            }
         }
     }
     
-    fileprivate func notFoundHide() {
-        UIView.animate(withDuration: 0.3, delay: 5, options: .curveEaseInOut) {
-            self.notFoundView.alpha = 0
-            self.recentlyTitle.alpha = 1
-            self.recentlyCollection.alpha = 1
-        } completion: { _ in
-            self.notFoundView.removeFromSuperview()
+    @objc func endingSearch() {
+        collectionView.subviews.forEach { item in
+            if let cell = item as? HeaderCell {
+                cell.closeSearch(cell.searchField)
+            }
         }
     }
     

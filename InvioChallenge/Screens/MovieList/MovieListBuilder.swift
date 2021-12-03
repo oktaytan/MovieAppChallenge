@@ -10,7 +10,8 @@ import UIKit
 final class MovieListBuilder {
     
     static func make() -> MovieListViewController {
-        let viewController = MovieListViewController()
+        let layout = UICollectionViewFlowLayout()
+        let viewController = MovieListViewController(collectionViewLayout: layout)
         viewController.viewModel = MovieListViewModel(service: app.service)
         return viewController
     }
