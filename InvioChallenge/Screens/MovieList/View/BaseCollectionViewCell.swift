@@ -11,12 +11,11 @@ class BaseCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupViews()
     }
     
     func setupViews() {
-        
+        backgroundColor = .white
     }
     
     required init?(coder: NSCoder) {

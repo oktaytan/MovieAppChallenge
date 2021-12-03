@@ -17,6 +17,7 @@ final class MovieListViewController: UIViewController {
     let loadingView = LoadingIndicatorView()
     let notFoundView = MovieNotFoundView()
     var searchFieldTopAnchor: NSLayoutConstraint?
+    
     var isLoading: Bool = false {
         didSet {
             if isLoading {
@@ -52,7 +53,7 @@ final class MovieListViewController: UIViewController {
     
     lazy var recentlyCollection: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         collectionView.contentInset = .init(top: 0, left: 24, bottom: 0, right: 24)
         return collectionView
