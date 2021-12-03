@@ -11,6 +11,7 @@ final class TopNavigationView: UIView {
     
     init() {
         super.init(frame: .zero)
+        setupView()
         setupHierarchy()
         setupLayout()
     }
@@ -31,6 +32,10 @@ final class TopNavigationView: UIView {
         btn.contentMode = .scaleAspectFit
         return btn
     }()
+    
+    fileprivate func setupView() {
+        backgroundColor = .none
+    }
     
     fileprivate func setupHierarchy() {
         addSubview(menuButton)

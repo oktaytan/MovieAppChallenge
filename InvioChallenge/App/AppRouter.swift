@@ -22,9 +22,8 @@ final class AppRouter {
         window.makeKeyAndVisible()
     }
     
-    func goToDetail(_ movieDetail: MovieDetail) {
-        let detailViewController = MovieDetailViewController()
-        detailViewController.movieDetail = movieDetail
+    func goToDetail(_ movieID: String) {
+        let detailViewController = MovieDetailBuilder.make(with: movieID)
         navigationController.pushViewController(detailViewController, animated: true)
     }
     

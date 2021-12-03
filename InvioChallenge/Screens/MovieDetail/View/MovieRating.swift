@@ -11,15 +11,7 @@ final class MovieRating: UIStackView {
     
     var rating: Double = 0 {
         didSet {
-            
-            let rate = round(rating / 2)
-            for (index, item) in subviews.enumerated() {
-                for i in 0...Int(rate) {
-                    if index == i {
-                        item.tintColor = .secondaryColor
-                    }
-                }
-            }
+            self.calcRate(at: rating)
         }
     }
     
@@ -29,67 +21,8 @@ final class MovieRating: UIStackView {
         setupLayout()
     }
     
-    lazy var star1: UIImageView = {
-        let view = UIImageView()
-        let largeFont = UIFont.systemFont(ofSize: 24)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
-        view.image = image
-        view.tintColor = .bgColor
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    lazy var star2: UIImageView = {
-        let view = UIImageView()
-        let largeFont = UIFont.systemFont(ofSize: 24)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
-        view.image = image
-        view.tintColor = .bgColor
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    lazy var star3: UIImageView = {
-        let view = UIImageView()
-        let largeFont = UIFont.systemFont(ofSize: 24)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
-        view.image = image
-        view.tintColor = .bgColor
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    lazy var star4: UIImageView = {
-        let view = UIImageView()
-        let largeFont = UIFont.systemFont(ofSize: 24)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
-        view.image = image
-        view.tintColor = .bgColor
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    lazy var star5: UIImageView = {
-        let view = UIImageView()
-        let largeFont = UIFont.systemFont(ofSize: 24)
-        let configuration = UIImage.SymbolConfiguration(font: largeFont)
-        let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
-        view.image = image
-        view.tintColor = .bgColor
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
     fileprivate func setupHierarchy() {
-        self.addArrangedSubview(star1)
-        self.addArrangedSubview(star2)
-        self.addArrangedSubview(star3)
-        self.addArrangedSubview(star4)
-        self.addArrangedSubview(star5)
+        self.setStar()
     }
     
     fileprivate func setupLayout() {
@@ -101,5 +34,33 @@ final class MovieRating: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+// MARK: - Local functions
+extension MovieRating {
+    fileprivate func calcRate(at rating: Double) {
+        let rate = round(rating / 2)
+        print(Int(rate))
+        for (index, item) in subviews.enumerated() {
+            for i in 0...Int(rate) {
+                if index == (i - 1) {
+                    item.tintColor = .secondaryColor
+                }
+            }
+        }
+    }
     
+    fileprivate func setStar() {
+        for _ in 0...4  {
+            let star = UIImageView()
+            let largeFont = UIFont.systemFont(ofSize: 24)
+            let configuration = UIImage.SymbolConfiguration(font: largeFont)
+            let image = UIImage(systemName: "star.fill", withConfiguration: configuration)
+            star.image = image
+            star.tintColor = .bgColor
+            star.contentMode = .scaleAspectFit
+            
+            self.addArrangedSubview(star)
+        }
+    }
 }

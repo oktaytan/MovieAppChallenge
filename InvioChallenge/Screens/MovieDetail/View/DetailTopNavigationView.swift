@@ -13,6 +13,7 @@ final class DetailTopNavigationView: UIView {
     
     init() {
         super.init(frame: .zero)
+        setupView()
         setupHierarchy()
         setupLayout()
     }
@@ -46,6 +47,10 @@ final class DetailTopNavigationView: UIView {
         btn.addTarget(self, action: #selector(like), for: .touchUpInside)
         return btn
     }()
+    
+    fileprivate func setupView() {
+        backgroundColor = .none
+    }
     
     fileprivate func setupHierarchy() {
         self.addSubview(backButton)

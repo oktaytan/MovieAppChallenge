@@ -25,6 +25,7 @@ struct MovieDetail: Decodable {
     let plot: String
     let awards: String
     let language: String
+    let country: String
     let metascore: String
     let imdbRating: String
     
@@ -44,6 +45,7 @@ struct MovieDetail: Decodable {
         case plot = "Plot"
         case awards = "Awards"
         case language = "Language"
+        case country = "Country"
         case metascore = "Metascore"
         case imdbRating
     }

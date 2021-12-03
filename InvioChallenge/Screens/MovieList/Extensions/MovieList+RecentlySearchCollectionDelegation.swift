@@ -39,8 +39,8 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
                 return
             }
             
-            guard let detail = data else { return }
-            app.router.goToDetail(detail)
+            guard let movieID = data?.imdbID else { return }
+            app.router.goToDetail(movieID)
         }
     }
 
