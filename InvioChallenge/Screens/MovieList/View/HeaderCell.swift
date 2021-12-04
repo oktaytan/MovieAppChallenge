@@ -39,7 +39,7 @@ final class HeaderCell: BaseCell {
         let btn = UIButton(type: .system)
         btn.setTitle("Search", for: .normal)
         btn.setTitleColor(.white, for: .normal)
-        btn.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        btn.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
         btn.backgroundColor = .primaryColor
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.layer.cornerRadius = 10
@@ -77,14 +77,15 @@ final class HeaderCell: BaseCell {
         searchDescription.alpha = 0
         
         searchButton.centerXAnchor.constraint(equalTo: searchDescription.centerXAnchor).isActive = true
-        searchButton.centerYAnchor.constraint(equalTo: searchDescription.centerYAnchor).isActive = true
-        searchButton.constraintWidth(120)
+        searchButton.centerYAnchor.constraint(equalTo: searchDescription.centerYAnchor, constant: 30).isActive = true
+        searchButton.constraintWidth(100)
         searchButton.constraintHeight(44)
         searchButton.isHidden = true
     }
     
     @objc func searchBtnTapped() {
         guard let searchTitle = searchField.text else { return }
+        delegate?.searchButtonTap(title: searchTitle)
     }
     
 }
@@ -95,24 +96,19 @@ final class HeaderCell: BaseCell {
 protocol SearchBarActiveDelegation: AnyObject {
     func searchBegin()
     func searchEnd()
+    func searchButtonTap(title: String)
 }
 
 extension HeaderCell: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        if searchText.count > 0 {
-            searchDescription.isHidden = true
-            searchButton.isHidden = false
-        } else {
-            searchDescription.isHidden = false
-            searchButton.isHidden = true
-        }
+        setSearchButtonAnimation(searchText)
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
         delegate?.searchBegin()
+        listTitle.isHidden = true
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
             topMenu.transform = CGAffineTransform(translationX: 0, y: -30)
             topMenu.alpha = 0
@@ -121,7 +117,6 @@ extension HeaderCell: UISearchBarDelegate {
             searchFieldTopAnchor?.isActive = false
             searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -20)
             searchFieldTopAnchor?.isActive = true
-            listTitle.alpha = 0
             searchDescription.isHidden = false
             searchDescription.alpha = 1
             layoutIfNeeded()
@@ -140,6 +135,7 @@ extension HeaderCell: UISearchBarDelegate {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.searchTextField.resignFirstResponder()
         searchBar.searchTextField.text = ""
+        listTitle.isHidden = false
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
             topMenu.transform = .identity
             topMenu.alpha = 1
@@ -148,12 +144,38 @@ extension HeaderCell: UISearchBarDelegate {
             searchFieldTopAnchor?.isActive = false
             searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: welcomeText.bottomAnchor, constant: 11)
             searchFieldTopAnchor?.isActive = true
-            listTitle.alpha = 1
             searchDescription.alpha = 0
             searchDescription.isHidden = true
+            searchButton.transform = .identity
+            searchButton.alpha = 0
+            searchButton.isHidden = true
+            listTitle.alpha = 1
             layoutIfNeeded()
         }, completion: nil)
         
     }
     
+    func setSearchButtonAnimation(_ text: String) {
+        if text.count > 0 {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) { [weak self] in
+                self?.searchButton.isHidden = false
+                self?.searchDescription.transform = CGAffineTransform(translationX: 0, y: -20)
+                self?.searchDescription.alpha = 0
+                self?.searchButton.alpha = 1
+                self?.searchButton.transform = CGAffineTransform(translationX: 0, y: -30)
+            } completion: { [weak self] _ in
+                self?.searchDescription.isHidden = true
+            }
+        } else {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) { [weak self] in
+                self?.searchDescription.isHidden = false
+                self?.searchButton.transform = .identity
+                self?.searchButton.alpha = 0
+                self?.searchDescription.alpha = 1
+                self?.searchDescription.transform = .identity
+            } completion: { [weak self] _ in
+                self?.searchButton.isHidden = false
+            }
+        }
+    }
 }

@@ -10,6 +10,8 @@ import UIKit
 final class MovieListViewController: UICollectionViewController {
     
     var viewModel: MovieListViewModel!
+    var loadingView = LoadingIndicatorView()
+    var notFoundView = MovieNotFoundView()
     
     var movies: [Movie] = [
         .init(id: "1", title: "The Matrix", year: "1993", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
@@ -39,11 +41,16 @@ final class MovieListViewController: UICollectionViewController {
     }
     
     func setupHierarchy() {
-        
+        collectionView.addSubview(notFoundView)
+        collectionView.addSubview(loadingView)
     }
     
     func setupLayout() {
+        notFoundView.centerWithSuperview(size: .init(width: 200, height: 200))
+        notFoundView.isHidden = true
         
+        loadingView.centerWithSuperview()
+        loadingView.isHidden = true
     }
 }
 
@@ -98,6 +105,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
 
 
 
+// MARK: - SearchBar Delegation
 extension MovieListViewController: SearchBarActiveDelegation {
     
     func searchBegin() {
@@ -113,6 +121,24 @@ extension MovieListViewController: SearchBarActiveDelegation {
         collectionView.isScrollEnabled = true
         collectionView.subviews.forEach { item in
             if let cell = item as? MovieCell {
+                cell.isHidden = false
+            }
+        }
+    }
+    
+    func searchButtonTap(title: String) {
+        endingSearch()
+        collectionView.subviews.forEach { item in
+            guard let cell = item as? MovieCell else { return }
+            cell.isHidden = true
+        }
+        loadingView.isHidden = false
+        loadingView.isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.loadingView.isLoading = false
+            self.loadingView.isHidden = true
+            self.collectionView.subviews.forEach { item in
+                guard let cell = item as? MovieCell else { return }
                 cell.isHidden = false
             }
         }
