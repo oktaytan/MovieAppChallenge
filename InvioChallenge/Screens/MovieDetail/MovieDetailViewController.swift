@@ -9,11 +9,20 @@ import UIKit
 
 final class MovieDetailViewController: UICollectionViewController {
     
-    var viewModel: MovieDetailViewModel!
+    var viewModel: MovieDetailViewModel! {
+        didSet {
+            guard let vm = viewModel else { return }
+            if let id = vm.movieID {
+                getMovieDetail(movieID: id)
+            }
+        }
+    }
     var movieDetail: MovieDetail?
     let loadingView = LoadingIndicatorView()
     let movieNotFound = MovieNotFoundView()
+    var moviePosterInfo: PosterCellInfo?
     var isLoading: Bool = false
+    var notFound: Bool = true
     
     let summary = "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking trut the life he knows is the elaborate deception of an evil cyber-intelligence."
     
@@ -29,10 +38,11 @@ final class MovieDetailViewController: UICollectionViewController {
     }
     
     fileprivate func setupView() {
-        view.backgroundColor = .bgColor
+        view.backgroundColor = .white
         collectionView.register(HeaderDetailCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderDetailCell.id)
         collectionView.register(MoviePosterCell.self, forCellWithReuseIdentifier: MoviePosterCell.id)
         collectionView.register(SynopsisCell.self, forCellWithReuseIdentifier: SynopsisCell.id)
+        collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.id)
         collectionView.register(BaseCell.self, forCellWithReuseIdentifier: "test")
     }
     
@@ -42,10 +52,51 @@ final class MovieDetailViewController: UICollectionViewController {
     }
     
     fileprivate func setupLayout() {
-        loadingView.centerWithSuperview(size: .init(width: 200, height: 200))
+        loadingView.centerWithSuperview()
         loadingView.isHidden = true
         movieNotFound.centerWithSuperview(size: .init(width: self.view.bounds.width, height: 100))
         movieNotFound.isHidden = true
+    }
+    
+    func getMovieDetail(movieID: String) {
+        loadingView.isHidden = false
+        loadingView.isLoading = true
+        
+        app.service.fetchMovieDetail(for: movieID) { data, error in
+            if let _ = error {
+                self.loadingView.isLoading = false
+                self.loadingView.isHidden = true
+                self.movieNotFound.isHidden = false
+                self.notFound = true
+                return
+            }
+            
+            guard let detail = data else {
+                self.loadingView.isLoading = false
+                self.loadingView.isHidden = true
+                self.movieNotFound.isHidden = false
+                self.notFound = true
+                return
+            }
+            
+            app.service.fetchMoviePoster(urlString: detail.poster) { data, error in
+                
+                if let image = data {
+                    DispatchQueue.main.async {
+                        self.movieDetail = detail
+                        self.loadingView.isLoading = false
+                        self.loadingView.isHidden = true
+                        self.movieNotFound.isHidden = true
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData()
+                        self.moviePosterInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
+                        self.notFound = false
+                    }
+                }
+                
+            }
+            
+        }
     }
 }
 
@@ -58,11 +109,11 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 32
+        return 18
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,7 +124,7 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         case 1:
             return .init(width: view.frame.width, height: 180)
         default:
-            return .init(width: view.frame.width, height: 60)
+            return .init(width: view.frame.width, height: 50)
         }
         
     }
@@ -83,6 +134,10 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         if kind == UICollectionView.elementKindSectionHeader {
             
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderDetailCell.id, for: indexPath) as? HeaderDetailCell else { return UICollectionReusableView() }
+            if let detail = self.movieDetail {
+                let subMovieTitle = detail.title.prefix(24)
+                header.movieTitle.text = "\(subMovieTitle).."
+            }
             return header
         }
         
@@ -95,14 +150,19 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         switch indexPath.item {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.id, for:  indexPath) as? MoviePosterCell else { return UICollectionViewCell() }
+            cell.cellInfo = self.moviePosterInfo
+            cell.isHidden = self.notFound
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SynopsisCell.id, for:  indexPath) as? SynopsisCell else { return UICollectionViewCell() }
-            cell.summary = self.summary
+            if let detail = self.movieDetail {
+                cell.summary = detail.plot
+            }
+            cell.isHidden = self.notFound
             return cell
         default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "test", for: indexPath) as! BaseCell
-            cell.backgroundColor = .red
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            cell.isHidden = self.notFound
             return cell
         }
         

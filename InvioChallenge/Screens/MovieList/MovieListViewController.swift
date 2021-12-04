@@ -28,7 +28,7 @@ final class MovieListViewController: UICollectionViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .bgColor
+        view.backgroundColor = .white
         collectionView.isScrollEnabled = true
         collectionView.alwaysBounceVertical = true
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(endingSearch))
@@ -99,7 +99,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        app.router.goToDetail("1")
+        app.router.goToDetail("tt0346314")
     }
 }
 
@@ -126,7 +126,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
         }
     }
     
-    func searchButtonTap(title: String) {
+    func searchButtonTap(title: String, listTitle: UILabel) {
         endingSearch()
         collectionView.subviews.forEach { item in
             guard let cell = item as? MovieListCell else { return }
@@ -137,6 +137,8 @@ extension MovieListViewController: SearchBarActiveDelegation {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             self.loadingView.isLoading = false
             self.loadingView.isHidden = true
+            listTitle.text = "Total result : \(6)"
+            listTitle.isHidden = false
             self.collectionView.subviews.forEach { item in
                 guard let cell = item as? MovieListCell else { return }
                 cell.isHidden = false

@@ -40,7 +40,6 @@ final class MovieRating: UIStackView {
 extension MovieRating {
     fileprivate func calcRate(at rating: Double) {
         let rate = round(rating / 2)
-        print(Int(rate))
         for (index, item) in subviews.enumerated() {
             for i in 0...Int(rate) {
                 if index == (i - 1) {

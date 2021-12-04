@@ -19,7 +19,7 @@ final class SearchField: UISearchBar  {
         self.tintColor = .textColor
         self.searchTextField.backgroundColor = .bgColor
         self.searchBarStyle = .minimal
-        self.backgroundColor = .none
+        self.backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

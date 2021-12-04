@@ -85,7 +85,7 @@ final class HeaderListCell: BaseCell {
     
     @objc func searchBtnTapped() {
         guard let searchTitle = searchField.text else { return }
-        delegate?.searchButtonTap(title: searchTitle)
+        delegate?.searchButtonTap(title: searchTitle, listTitle: self.listTitle)
     }
     
 }
@@ -96,7 +96,7 @@ final class HeaderListCell: BaseCell {
 protocol SearchBarActiveDelegation: AnyObject {
     func searchBegin()
     func searchEnd()
-    func searchButtonTap(title: String)
+    func searchButtonTap(title: String, listTitle: UILabel)
 }
 
 extension HeaderListCell: UISearchBarDelegate {
@@ -135,7 +135,6 @@ extension HeaderListCell: UISearchBarDelegate {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.searchTextField.resignFirstResponder()
         searchBar.searchTextField.text = ""
-        listTitle.isHidden = false
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
             topMenu.transform = .identity
             topMenu.alpha = 1

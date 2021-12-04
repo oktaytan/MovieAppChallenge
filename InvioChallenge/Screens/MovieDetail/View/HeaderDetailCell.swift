@@ -23,7 +23,7 @@ class HeaderDetailCell: BaseCell {
     
     lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Matrix"
+        label.text = ""
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .textColor

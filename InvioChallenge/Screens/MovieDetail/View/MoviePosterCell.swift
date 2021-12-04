@@ -11,10 +11,97 @@ final class MoviePosterCell: BaseCell {
     
     static let id = "MoviePosterCell"
     
-    var duration = UITextView()
-    var release = UITextView()
-    var language = UITextView()
+    var cellInfo: PosterCellInfo? {
+        didSet {
+            guard let info = cellInfo else { return }
+            self.movieRating.rating = Double(info.rate)!
+            self.moviePoster.image = info.posterImage
+            self.duration.text = info.duration
+            self.release.text = info.release.components(separatedBy: "–")[0]
+            self.language.text = info.language.components(separatedBy: ",")[0]
+        }
+    }
+    
     let movieRating = MovieRating()
+    
+    lazy var durationTitle: UILabel = {
+        let label = UILabel()
+        label.text = "Duration"
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.textAlignment = .center
+        label.textColor = .subTextColor
+        return label
+    }()
+    
+    lazy var duration: UILabel = {
+        let label = UILabel()
+        label.text = "--- min"
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        label.textColor = .textColor
+        return label
+    }()
+    
+    lazy var durationStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.alignment = .center
+        return stack
+    }()
+    
+    lazy var releaseTitle: UILabel = {
+        let label = UILabel()
+        label.text = "Year"
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.textAlignment = .center
+        label.textColor = .subTextColor
+        return label
+    }()
+    
+    lazy var release: UILabel = {
+        let label = UILabel()
+        label.text = "----"
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        label.textColor = .textColor
+        return label
+    }()
+    
+    lazy var releaseStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.alignment = .center
+        return stack
+    }()
+    
+    lazy var languageTitle: UILabel = {
+        let label = UILabel()
+        label.text = "Language"
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.textAlignment = .center
+        label.textColor = .subTextColor
+        return label
+    }()
+    
+    lazy var language: UILabel = {
+        let label = UILabel()
+        label.text = "----"
+        label.font = .systemFont(ofSize: 18, weight: .semibold)
+        label.textAlignment = .center
+        label.textColor = .textColor
+        return label
+    }()
+    
+    lazy var languageStackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.alignment = .center
+        return stack
+    }()
+    
     lazy var moviePoster: UIImageView = {
         let poster = UIImageView()
         let image = UIImage(named: "no_photo")
@@ -25,7 +112,7 @@ final class MoviePosterCell: BaseCell {
         return poster
     }()
     
-    lazy var stackView: UIStackView = {
+    lazy var wrapStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .equalSpacing
@@ -36,36 +123,38 @@ final class MoviePosterCell: BaseCell {
     
     override func setupViews() {
         backgroundColor = .clear
-        duration = self.setAttributedText(for: "136 min", at: "Duration")
-        release = self.setAttributedText(for: "1999", at: "Release")
-        language = self.setAttributedText(for: "English", at: "Language")
-        movieRating.rating = 7.2
-        
-        stackView.addArrangedSubview(duration)
-        stackView.addArrangedSubview(release)
-        stackView.addArrangedSubview(language)
-        stackView.addArrangedSubview(movieRating)
+        movieRating.rating = 0.0
         
         addSubview(moviePoster)
-        addSubview(stackView)
         
         moviePoster.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: nil, padding: .init(top: 42, left: 24, bottom: 0, right: 0))
         moviePoster.constraintWidth(200)
         moviePoster.constraintHeight(245)
         
-        duration.constraintWidth(100)
-        duration.constraintHeight(60)
+        durationStackView.addArrangedSubview(duration)
+        durationStackView.addArrangedSubview(durationTitle)
+        durationStackView.constraintWidth(100)
+        durationStackView.constraintHeight(44)
         
-        release.constraintWidth(100)
-        release.constraintHeight(60)
+        releaseStackView.addArrangedSubview(release)
+        releaseStackView.addArrangedSubview(releaseTitle)
+        releaseStackView.constraintWidth(100)
+        releaseStackView.constraintHeight(44)
         
-        language.constraintWidth(100)
-        language.constraintHeight(60)
+        languageStackView.addArrangedSubview(language)
+        languageStackView.addArrangedSubview(languageTitle)
+        languageStackView.constraintWidth(100)
+        languageStackView.constraintHeight(44)
         
         movieRating.constraintWidth(85)
         movieRating.constraintHeight(16)
         
-        stackView.anchor(top: moviePoster.topAnchor, bottom: moviePoster.bottomAnchor, leading: moviePoster.trailingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 0))
+        wrapStackView.addArrangedSubview(durationStackView)
+        wrapStackView.addArrangedSubview(releaseStackView)
+        wrapStackView.addArrangedSubview(languageStackView)
+        wrapStackView.addArrangedSubview(movieRating)
+        addSubview(wrapStackView)
+        
+        wrapStackView.anchor(top: moviePoster.topAnchor, bottom: moviePoster.bottomAnchor, leading: moviePoster.trailingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
     }
-    
 }

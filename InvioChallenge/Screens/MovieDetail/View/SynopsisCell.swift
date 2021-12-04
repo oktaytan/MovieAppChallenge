@@ -50,7 +50,7 @@ final class SynopsisCell: BaseCell {
         self.addSubview(synopsisTitle)
         self.addSubview(synopsisText)
         
-        synopsisTitle.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 0, right: 24))
+        synopsisTitle.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 24, bottom: 0, right: 24))
         synopsisText.anchor(top: synopsisTitle.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 10, left: 20, bottom: 0, right: 24))
     }
     
