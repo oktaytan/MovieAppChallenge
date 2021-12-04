@@ -35,13 +35,28 @@ final class HeaderCell: BaseCell {
         return label
     }()
     
+    lazy var searchButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Search", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        btn.backgroundColor = .primaryColor
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.layer.cornerRadius = 10
+        btn.clipsToBounds = true
+        btn.addTarget(self, action: #selector(searchBtnTapped), for: .touchUpInside)
+        return btn
+    }()
+    
     override func setupViews() {
         searchField.delegate = self
+        
         addSubview(topMenu)
         addSubview(welcomeText)
         addSubview(searchField)
         addSubview(listTitle)
         addSubview(searchDescription)
+        addSubview(searchButton)
         
         topMenu.centerXSuperView()
         topMenu.anchor(top: safeAreaLayoutGuide.topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 0, right: 24))
@@ -61,10 +76,22 @@ final class HeaderCell: BaseCell {
         searchDescription.isHidden = true
         searchDescription.alpha = 0
         
+        searchButton.centerXAnchor.constraint(equalTo: searchDescription.centerXAnchor).isActive = true
+        searchButton.centerYAnchor.constraint(equalTo: searchDescription.centerYAnchor).isActive = true
+        searchButton.constraintWidth(120)
+        searchButton.constraintHeight(44)
+        searchButton.isHidden = true
+    }
+    
+    @objc func searchBtnTapped() {
+        guard let searchTitle = searchField.text else { return }
     }
     
 }
 
+
+
+// MARK: - SearchBar Delegation
 protocol SearchBarActiveDelegation: AnyObject {
     func searchBegin()
     func searchEnd()
@@ -73,7 +100,14 @@ protocol SearchBarActiveDelegation: AnyObject {
 extension HeaderCell: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
+        
+        if searchText.count > 0 {
+            searchDescription.isHidden = true
+            searchButton.isHidden = false
+        } else {
+            searchDescription.isHidden = false
+            searchButton.isHidden = true
+        }
     }
     
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {

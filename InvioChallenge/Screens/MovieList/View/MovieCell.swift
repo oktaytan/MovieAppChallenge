@@ -11,6 +11,16 @@ final class MovieCell: BaseCell {
     
     static let id = "MovieCell"
     
+    var movie: Movie? {
+        didSet {
+            guard let mv = movie else { return }
+            movieTitle.text = mv.title
+            movieYear.text = mv.year
+            movieType.text = mv.type
+            movieID.text = "IMDB ID : \(mv.id)"
+        }
+    }
+    
     lazy var moviePoster: UIImageView = {
         let poster = UIImageView()
         let image = UIImage(named: "no_photo")
@@ -23,7 +33,7 @@ final class MovieCell: BaseCell {
     
     lazy var movieTitle: UILabel = {
         let label = UILabel()
-        label.text = "The Matrix"
+        label.text = "No name"
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = .textColor
         return label
@@ -31,7 +41,7 @@ final class MovieCell: BaseCell {
     
     lazy var movieYear: UILabel = {
         let label = UILabel()
-        label.text = "1993"
+        label.text = "----"
         label.font = .systemFont(ofSize: 15, weight: .regular)
         label.textColor = .textColor
         return label
@@ -47,7 +57,7 @@ final class MovieCell: BaseCell {
     
     lazy var movieID: UILabel = {
         let label = UILabel()
-        label.text = "IMDB ID : tt233246"
+        label.text = "IMDB ID : ---------"
         label.font = .systemFont(ofSize: 13, weight: .regular)
         label.textColor = .subTextColor
         return label

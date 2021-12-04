@@ -33,8 +33,9 @@ final class MovieListViewController: UICollectionViewController {
         swipeGesture.direction = .down
         swipeGesture.numberOfTouchesRequired = 1
         collectionView.addGestureRecognizer(swipeGesture)
-        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.id)
+        
         collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCell.id)
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.id)
     }
     
     func setupHierarchy() {
@@ -48,6 +49,7 @@ final class MovieListViewController: UICollectionViewController {
 
 
 
+// MARK: - CollectionView Delegation
 extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -63,7 +65,9 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.id, for: indexPath) as? MovieCell else { return UICollectionViewCell() }
+        cell.movie = self.movies[indexPath.item]
         return cell
     }
     
@@ -90,7 +94,6 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         app.router.goToDetail("1")
     }
-    
 }
 
 
@@ -124,3 +127,4 @@ extension MovieListViewController: SearchBarActiveDelegation {
     }
     
 }
+
