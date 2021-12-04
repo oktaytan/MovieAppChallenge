@@ -1,5 +1,5 @@
 //
-//  MovieCollectionCell.swift
+//  MovieListCell.swift
 //  InvioChallenge
 //
 //  Created by Oktay Tanrıkulu on 2.12.2021.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class MovieCell: BaseCell {
+final class MovieListCell: BaseCell {
     
-    static let id = "MovieCell"
+    static let id = "MovieListCell"
     
     var movie: Movie? {
         didSet {

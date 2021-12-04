@@ -9,6 +9,8 @@ import UIKit
 
 final class TopNavigationView: UIView {
     
+    var themeMode : UIUserInterfaceStyle = .light
+    
     init() {
         super.init(frame: .zero)
         setupView()
@@ -18,8 +20,10 @@ final class TopNavigationView: UIView {
     
     lazy var menuButton: UIButton = {
         let btn = UIButton(type: .system)
-        let image = UIImage(named: "menuIcon")
+        let image = UIImage(named: "modeIcon")
         btn.setBackgroundImage(image, for: .normal)
+        btn.tintColor = .primaryColor
+        btn.addTarget(self, action: #selector(modeChangeTap), for: .touchUpInside)
         return btn
     }()
     
@@ -43,8 +47,8 @@ final class TopNavigationView: UIView {
     }
     
     fileprivate func setupLayout() {
-        menuButton.constraintWidth(22)
-        menuButton.constraintHeight(22)
+        menuButton.constraintWidth(30)
+        menuButton.constraintHeight(30)
         menuButton.centerYSuperView()
         menuButton.anchor(top: nil, bottom: nil, leading: self.leadingAnchor, trailing: nil)
         
@@ -58,5 +62,23 @@ final class TopNavigationView: UIView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func modeChangeTap() {
+        guard let keyWindow = UIApplication.shared.connectedScenes
+                                .filter({$0.activationState == .foregroundActive})
+                                .map({$0 as? UIWindowScene})
+                                .compactMap({$0})
+                                .first?.windows
+                                .filter({$0.isKeyWindow}).first else { return }
+        
+        if self.themeMode == .light {
+            keyWindow.overrideUserInterfaceStyle = .dark
+            self.themeMode = .dark
+        } else {
+            keyWindow.overrideUserInterfaceStyle = .light
+            self.themeMode = .light
+        }
+        
     }
 }

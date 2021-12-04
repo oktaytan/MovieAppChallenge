@@ -62,9 +62,9 @@ final class DetailView: UIView {
     
     init() {
         super.init(frame: .zero)
-        setupView()
-        setupHierarchy()
-        setupLayout()
+//        setupView()
+//        setupHierarchy()
+//        setupLayout()
     }
     
     lazy var topStackView: UIStackView = {

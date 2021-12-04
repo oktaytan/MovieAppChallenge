@@ -1,5 +1,5 @@
 //
-//  HeaderCell.swift
+//  HeaderListCell.swift
 //  InvioChallenge
 //
 //  Created by Oktay Tanrıkulu on 4.12.2021.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class HeaderCell: BaseCell {
+final class HeaderListCell: BaseCell {
     
-    static let id = "HeaderCell"
+    static let id = "HeaderListCell"
     var delegate: SearchBarActiveDelegation?
     
     let topMenu = TopNavigationView()
@@ -99,7 +99,7 @@ protocol SearchBarActiveDelegation: AnyObject {
     func searchButtonTap(title: String)
 }
 
-extension HeaderCell: UISearchBarDelegate {
+extension HeaderListCell: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         setSearchButtonAnimation(searchText)

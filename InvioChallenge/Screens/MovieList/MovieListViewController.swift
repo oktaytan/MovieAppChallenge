@@ -28,7 +28,7 @@ final class MovieListViewController: UICollectionViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .bgColor
         collectionView.isScrollEnabled = true
         collectionView.alwaysBounceVertical = true
         let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(endingSearch))
@@ -36,8 +36,8 @@ final class MovieListViewController: UICollectionViewController {
         swipeGesture.numberOfTouchesRequired = 1
         collectionView.addGestureRecognizer(swipeGesture)
         
-        collectionView.register(HeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCell.id)
-        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.id)
+        collectionView.register(HeaderListCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderListCell.id)
+        collectionView.register(MovieListCell.self, forCellWithReuseIdentifier: MovieListCell.id)
     }
     
     func setupHierarchy() {
@@ -73,7 +73,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.id, for: indexPath) as? MovieCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.id, for: indexPath) as? MovieListCell else { return UICollectionViewCell() }
         cell.movie = self.movies[indexPath.item]
         return cell
     }
@@ -86,7 +86,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
         
         if kind == UICollectionView.elementKindSectionHeader {
             
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCell.id, for: indexPath) as? HeaderCell else { return UICollectionReusableView() }
+            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderListCell.id, for: indexPath) as? HeaderListCell else { return UICollectionReusableView() }
             header.delegate = self
             return header
         }
@@ -111,7 +111,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     func searchBegin() {
         collectionView.isScrollEnabled = false
         collectionView.subviews.forEach { item in
-            if let cell = item as? MovieCell {
+            if let cell = item as? MovieListCell {
                 cell.isHidden = true
             }
         }
@@ -120,7 +120,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     func searchEnd() {
         collectionView.isScrollEnabled = true
         collectionView.subviews.forEach { item in
-            if let cell = item as? MovieCell {
+            if let cell = item as? MovieListCell {
                 cell.isHidden = false
             }
         }
@@ -129,7 +129,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     func searchButtonTap(title: String) {
         endingSearch()
         collectionView.subviews.forEach { item in
-            guard let cell = item as? MovieCell else { return }
+            guard let cell = item as? MovieListCell else { return }
             cell.isHidden = true
         }
         loadingView.isHidden = false
@@ -138,7 +138,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
             self.loadingView.isLoading = false
             self.loadingView.isHidden = true
             self.collectionView.subviews.forEach { item in
-                guard let cell = item as? MovieCell else { return }
+                guard let cell = item as? MovieListCell else { return }
                 cell.isHidden = false
             }
         }
@@ -146,7 +146,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     
     @objc func endingSearch() {
         collectionView.subviews.forEach { item in
-            if let cell = item as? HeaderCell {
+            if let cell = item as? HeaderListCell {
                 cell.closeSearch(cell.searchField)
             }
         }

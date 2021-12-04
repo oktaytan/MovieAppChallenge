@@ -1,5 +1,5 @@
 //
-//  BaseCollectionViewCell.swift
+//  BaseCell.swift
 //  InvioChallenge
 //
 //  Created by Oktay Tanrıkulu on 2.12.2021.

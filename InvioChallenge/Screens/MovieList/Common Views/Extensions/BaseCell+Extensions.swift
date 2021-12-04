@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension DetailView {
+extension BaseCell {
     
     func setAttributedText(for text: String?, at subText: String, space: CGFloat = 8.0) -> UITextView {
         let textView = UITextView()
