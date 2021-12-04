@@ -21,8 +21,6 @@ final class MovieDetailViewController: UICollectionViewController {
     let loadingView = LoadingIndicatorView()
     let movieNotFound = MovieNotFoundView()
     var moviePosterInfo: PosterCellInfo?
-    var isLoading: Bool = false
-    var notFound: Bool = true
     
     let summary = "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking trut the life he knows is the elaborate deception of an evil cyber-intelligence."
     
@@ -59,6 +57,7 @@ final class MovieDetailViewController: UICollectionViewController {
     }
     
     func getMovieDetail(movieID: String) {
+        collectionView.isHidden = true
         loadingView.isHidden = false
         loadingView.isLoading = true
         
@@ -67,7 +66,7 @@ final class MovieDetailViewController: UICollectionViewController {
                 self.loadingView.isLoading = false
                 self.loadingView.isHidden = true
                 self.movieNotFound.isHidden = false
-                self.notFound = true
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 return
             }
             
@@ -75,7 +74,7 @@ final class MovieDetailViewController: UICollectionViewController {
                 self.loadingView.isLoading = false
                 self.loadingView.isHidden = true
                 self.movieNotFound.isHidden = false
-                self.notFound = true
+                self.navigationItem.setHidesBackButton(false, animated: true)
                 return
             }
             
@@ -90,7 +89,6 @@ final class MovieDetailViewController: UICollectionViewController {
                         self.collectionView.isHidden = false
                         self.collectionView.reloadData()
                         self.moviePosterInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
-                        self.notFound = false
                     }
                 }
                 
@@ -134,10 +132,16 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         if kind == UICollectionView.elementKindSectionHeader {
             
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderDetailCell.id, for: indexPath) as? HeaderDetailCell else { return UICollectionReusableView() }
+            
             if let detail = self.movieDetail {
-                let subMovieTitle = detail.title.prefix(24)
-                header.movieTitle.text = "\(subMovieTitle).."
+                if detail.title.count > 24 {
+                    let subMovieTitle = detail.title.prefix(24)
+                    header.movieTitle.text = "\(subMovieTitle).."
+                } else {
+                    header.movieTitle.text = detail.title
+                }
             }
+            
             return header
         }
         
@@ -151,18 +155,15 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.id, for:  indexPath) as? MoviePosterCell else { return UICollectionViewCell() }
             cell.cellInfo = self.moviePosterInfo
-            cell.isHidden = self.notFound
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SynopsisCell.id, for:  indexPath) as? SynopsisCell else { return UICollectionViewCell() }
             if let detail = self.movieDetail {
                 cell.summary = detail.plot
             }
-            cell.isHidden = self.notFound
             return cell
         default:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            cell.isHidden = self.notFound
             return cell
         }
         
