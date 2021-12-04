@@ -148,10 +148,10 @@ extension HeaderListCell: UISearchBarDelegate {
             searchButton.transform = .identity
             searchButton.alpha = 0
             searchButton.isHidden = true
+            listTitle.isHidden = false
             listTitle.alpha = 1
             layoutIfNeeded()
         }, completion: nil)
-        
     }
     
     func setSearchButtonAnimation(_ text: String) {
@@ -177,4 +177,6 @@ extension HeaderListCell: UISearchBarDelegate {
             }
         }
     }
+    
+    
 }

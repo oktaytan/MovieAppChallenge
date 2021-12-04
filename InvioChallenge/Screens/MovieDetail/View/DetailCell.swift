@@ -34,7 +34,7 @@ final class DetailCell: BaseCell {
         label.font = .systemFont(ofSize: 15, weight: .regular)
         label.textColor = .textColor
         label.numberOfLines = 10
-        label.lineBreakMode = .byCharWrapping
+        label.lineBreakMode = .byWordWrapping
         return label
     }()
     
@@ -43,8 +43,7 @@ final class DetailCell: BaseCell {
         addSubview(detailText)
         
         detailTitle.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 0, right: 24))
-        detailTitle.constraintHeight(14)
-        detailText.anchor(top: detailTitle.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 0, right: 24))
+        detailText.anchor(top: detailTitle.bottomAnchor, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 4, left: 24, bottom: 3, right: 24))
     }
     
 }

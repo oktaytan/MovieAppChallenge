@@ -20,7 +20,7 @@ final class SynopsisCell: BaseCell {
             ])
             
             let paragraphStyle = NSMutableParagraphStyle()
-            paragraphStyle.lineSpacing = 6
+            paragraphStyle.lineSpacing = 4
             let range = NSMakeRange(0, attributedText.string.count)
             attributedText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: range)
             

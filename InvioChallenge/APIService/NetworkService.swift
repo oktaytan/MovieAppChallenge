@@ -26,7 +26,7 @@ final class NetworkService {
 
 extension NetworkService {
     
-    func fetchMovies(for title: String, page: Int = 1, handler: @escaping (Search?, Error?) -> Void) {
+    func fetchMovies(for title: String, page: Int = 1, handler: @escaping (Result<Search>) -> Void) {
         
         let paramaters: [String : Any] = [
             "apikey": apiKey,
@@ -39,10 +39,10 @@ extension NetworkService {
         
         request.responseDecodable { (response: DataResponse<Search, AFError>) in
             switch response.result {
-            case .success(let movies):
-                handler(movies, nil)
+            case .success(let search):
+                handler(.success(search))
             case .failure(let error):
-                handler(nil, error)
+                handler(.failure(error))
             }
         }
     }

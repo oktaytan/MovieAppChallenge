@@ -13,12 +13,7 @@ final class MovieListViewController: UICollectionViewController {
     var loadingView = LoadingIndicatorView()
     var notFoundView = MovieNotFoundView()
     
-    var movies: [Movie] = [
-        .init(id: "1", title: "The Matrix", year: "1993", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
-        .init(id: "2", title: "The Matrix Reloaded", year: "2003", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BODE0MzZhZTgtYzkwYi00YmI5LThlZWYtOWRmNWE5ODk0NzMxXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"),
-        .init(id: "3", title: "The Matrix Revolutions", year: "2003", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BNzNlZTZjMDctZjYwNi00NzljLWIwN2QtZWZmYmJiYzQ0MTk2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg"),
-        .init(id: "4", title: "The Matrix Revisited", year: "2001", type: "Movie", poster: "https://m.media-amazon.com/images/M/MV5BMTkzNjg3NjE4N15BMl5BanBnXkFtZTgwNTc3NTAwNzE@._V1_SX300.jpg")
-    ]
+    var movies: [Movie] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +94,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        app.router.goToDetail("tt0242653")
+        app.router.goToDetail("tt0489099")
     }
 }
 
@@ -110,6 +105,8 @@ extension MovieListViewController: SearchBarActiveDelegation {
     
     func searchBegin() {
         collectionView.isScrollEnabled = false
+        notFoundView.isHidden = true
+        loadingView.isHidden = true
         collectionView.subviews.forEach { item in
             if let cell = item as? MovieListCell {
                 cell.isHidden = true
@@ -124,25 +121,45 @@ extension MovieListViewController: SearchBarActiveDelegation {
                 cell.isHidden = false
             }
         }
+        collectionView.reloadData()
     }
     
     func searchButtonTap(title: String, listTitle: UILabel) {
+        
         endingSearch()
         collectionView.subviews.forEach { item in
             guard let cell = item as? MovieListCell else { return }
             cell.isHidden = true
         }
+        
         loadingView.isHidden = false
         loadingView.isLoading = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.loadingView.isLoading = false
-            self.loadingView.isHidden = true
-            listTitle.text = "Total result : \(6)"
-            listTitle.isHidden = false
-            self.collectionView.subviews.forEach { item in
-                guard let cell = item as? MovieListCell else { return }
-                cell.isHidden = false
+        
+        viewModel.fetchMovies(title: title) { [weak self] (search, error) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                self.loadingView.isLoading = false
+                self.loadingView.isHidden = true
+                listTitle.text = "Total results : 0"
+                listTitle.isHidden = false
+                self.notFoundView.isHidden = false
+                self.notFoundView.notFoundText.text = error.description
+            } else {
+                guard let data = search, let results = data.results else { return }
+                self.movies = results
+                self.loadingView.isLoading = false
+                self.loadingView.isHidden = true
+                listTitle.text = "Search results"
+                listTitle.isHidden = false
+                self.collectionView.subviews.forEach { item in
+                    guard let cell = item as? MovieListCell else { return }
+                    cell.isHidden = false
+                }
+                self.collectionView.reloadData()
             }
+            
+            
         }
     }
     

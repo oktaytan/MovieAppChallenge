@@ -17,12 +17,11 @@ final class MovieDetailViewController: UICollectionViewController {
             }
         }
     }
+    
     var movieDetail: MovieDetail?
     let loadingView = LoadingIndicatorView()
     let movieNotFound = MovieNotFoundView()
     var moviePosterInfo: PosterCellInfo?
-    
-    let summary = "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking trut the life he knows is the elaborate deception of an evil cyber-intelligence."
     
     override func viewDidLoad() {
         setupView()
@@ -120,7 +119,7 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         case 0:
             return .init(width: view.frame.width, height: 300)
         case 1:
-            return .init(width: view.frame.width, height: 180)
+            return .init(width: view.frame.width, height: 150)
         default:
             return .init(width: view.frame.width, height: 50)
         }
@@ -160,6 +159,8 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SynopsisCell.id, for:  indexPath) as? SynopsisCell else { return UICollectionViewCell() }
             if let detail = self.movieDetail {
                 cell.summary = detail.plot
+                let height = detail.plot.estimatedHeightForText(view: cell, fontSize: 15) + 50
+                cell.frame.size.height = height
             }
             return cell
         case 2:
@@ -180,6 +181,8 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
             if let detail = self.movieDetail {
                 let info = ["Actors" : detail.actors]
+                let height = detail.actors.estimatedHeightForText(view: cell, fontSize: 15)
+                cell.frame.size.height = height + 10
                 cell.detailInfo = info
             }
             return cell
@@ -208,8 +211,6 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
             return cell
         }
-        
-        
     }
     
     

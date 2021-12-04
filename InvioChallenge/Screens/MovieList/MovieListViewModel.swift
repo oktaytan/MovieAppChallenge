@@ -7,31 +7,45 @@
 
 import Foundation
 
-struct MovieListViewModel {
-    private let service: NetworkService
-    private var searchedMovies: [Movie] = []
-    private var lastSearchedMovies: [Movie] = []
-    private var popularMovies: [Movie] = []
-}
-
-extension MovieListViewModel {
+class MovieListViewModel: NSObject {
+    private var service: NetworkService!
+    private(set) var lastSearchedMovies: [Movie] = []
+    private(set) var isLoading = false
+    
     init(service: NetworkService) {
         self.service = service
     }
 }
 
 extension MovieListViewModel {
-    var numberOfSections: Int {
-        return 1
-    }
+//    var numberOfSections: Int {
+//        return 1
+//    }
+//
+//    func numberOfRowsInSections(in section: Int) -> Int {
+//        return self.searchedMovies.count
+//    }
+//
+//    func movieIDAtIndex(at index: Int) -> String {
+//        let movie = self.searchedMovies[index]
+//        return movie.id
+//    }
     
-    func numberOfRowsInSections(in section: Int) -> Int {
-        return self.searchedMovies.count
+    func fetchMovies(title: String, completion: @escaping (Search?, CustomError?) -> Void) {
+        app.service.fetchMovies(for: title) { search in
+            switch search {
+            case .success(let response):
+                if response.results != nil {
+                    completion(response, nil)
+                } else {
+                    guard let error = response.error else { return }
+                    completion(nil, CustomError(description: error))
+                }
+            case .failure(let error):
+                completion(nil, CustomError(description: error.localizedDescription))
+            }
+        }
     }
-    
-    func movieIDAtIndex(at index: Int) -> String {
-        let movie = self.searchedMovies[index]
-        return movie.id
-    }
-    
 }
+
+
