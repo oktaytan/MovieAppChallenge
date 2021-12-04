@@ -111,7 +111,7 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 8
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -160,6 +160,48 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SynopsisCell.id, for:  indexPath) as? SynopsisCell else { return UICollectionViewCell() }
             if let detail = self.movieDetail {
                 cell.summary = detail.plot
+            }
+            return cell
+        case 2:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Director" : detail.director]
+                cell.detailInfo = info
+            }
+            return cell
+        case 3:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Writer" : detail.writer]
+                cell.detailInfo = info
+            }
+            return cell
+        case 4:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Actors" : detail.actors]
+                cell.detailInfo = info
+            }
+            return cell
+        case 5:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Genre" : detail.genre]
+                cell.detailInfo = info
+            }
+            return cell
+        case 6:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Country" : detail.country]
+                cell.detailInfo = info
+            }
+            return cell
+        case 7:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
+            if let detail = self.movieDetail {
+                let info = ["Awards" : detail.awards]
+                cell.detailInfo = info
             }
             return cell
         default:

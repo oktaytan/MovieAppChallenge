@@ -14,3 +14,4 @@ struct PosterCellInfo {
     var rate: String
     var posterImage: UIImage
 }
+

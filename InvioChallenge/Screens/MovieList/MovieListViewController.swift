@@ -99,7 +99,7 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        app.router.goToDetail("3")
+        app.router.goToDetail("tt0242653")
     }
 }
 
