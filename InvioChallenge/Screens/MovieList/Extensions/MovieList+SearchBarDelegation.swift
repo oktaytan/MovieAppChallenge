@@ -37,31 +37,29 @@ extension MovieListViewController: SearchBarActiveDelegation {
             cell.isHidden = true
         }
         
-        loadingView.isHidden = false
-        loadingView.isLoading = true
-        
-        viewModel.fetchMovies(title: title) { [weak self] (search, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                listTitle.text = "Total results : 0"
-                listTitle.isHidden = false
-                self.notFoundView.isHidden = false
-                self.notFoundView.notFoundText.text = error.description
-            } else {
-                guard let data = search, let results = data.results else { return }
-                self.movies = results
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                listTitle.text = "Search results"
-                listTitle.isHidden = false
-                self.collectionView.subviews.forEach { item in
-                    guard let cell = item as? MovieListCell else { return }
-                    cell.isHidden = false
+        self.viewModel.fetchMovies(title: title)
+        self.viewModel.updateFetchStatus = {
+            self.loadingView.isLoading = self.viewModel.isLoading
+            if let error = self.viewModel.hasError?.description {
+                DispatchQueue.main.async {
+                    self.notFoundView.isHidden = false
+                    self.notFoundView.notFoundText.text = error.description
+                    print(error)
+                    self.collectionView.subviews.forEach { item in
+                        guard let cell = item as? MovieListCell else { return }
+                        cell.isHidden = false
+                    }
+                    self.collectionView.reloadData()
                 }
+            }
+
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
+            }
+            
+            self.collectionView.subviews.forEach { item in
+                guard let cell = item as? MovieListCell else { return }
+                cell.isHidden = false
             }
         }
     }

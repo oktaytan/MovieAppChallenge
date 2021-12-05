@@ -93,6 +93,7 @@ final class MovieDetailViewController: UICollectionViewController {
         self.loadingView.isHidden = true
         self.movieNotFound.isHidden = false
         self.navigationItem.setHidesBackButton(false, animated: true)
+        self.navigationItem.title = "Not Found"
     }
     
     fileprivate func movieFound() {

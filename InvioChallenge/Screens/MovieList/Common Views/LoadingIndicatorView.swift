@@ -14,10 +14,10 @@ final class LoadingIndicatorView: UIStackView {
         didSet {
             if isLoading {
                 self.loadingIndicator.startAnimating()
-                self.loadingText.alpha = 1
+                self.isHidden = false
             } else {
                 self.loadingIndicator.stopAnimating()
-                self.loadingText.alpha = 0
+                self.isHidden = true
             }
         }
     }

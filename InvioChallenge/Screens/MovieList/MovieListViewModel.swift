@@ -7,29 +7,66 @@
 
 import UIKit
 
-class MovieListViewModel: NSObject {
+class MovieListViewModel {
     private var service: NetworkService!
     private var userDefaults = UserDefaults.standard
     
-    init(service: NetworkService) {
-        super.init()
-        self.service = service
+    private(set) var movies: [Movie] = []
+    var updateFetchStatus: (() -> ())?
+    private(set) var hasError: CustomError?
+    
+    private(set) var isLoading: Bool = false {
+        didSet {
+            self.updateFetchStatus?()
+        }
     }
     
-    func fetchMovies(title: String, completion: @escaping (Search?, CustomError?) -> Void) {
+    init(service: NetworkService) {
+        self.service = service
+        if let title = userDefaults.value(forKey: app.userDefaultsKey) as? String {
+            self.fetchMovies(title: title)
+        }
+    }
+    
+//    func fetchMovies(title: String, completion: @escaping (Search?, CustomError?) -> Void) {
+//        app.service.fetchMovies(for: title) { [weak self] search in
+//            guard let self = self else { return }
+//            switch search {
+//            case .success(let response):
+//                if let _ = response.results  {
+//                    self.userDefaults.set(title, forKey: app.userDefaultsKey)
+//                    completion(response, nil)
+//                } else {
+//                    guard let error = response.error else { return }
+//                    completion(nil, CustomError(description: error))
+//                }
+//            case .failure(let error):
+//                completion(nil, CustomError(description: error.localizedDescription))
+//            }
+//        }
+//    }
+    
+    func fetchMovies(title: String) {
+        self.isLoading = true
         app.service.fetchMovies(for: title) { [weak self] search in
             guard let self = self else { return }
+            
+            self.isLoading = false
+            
             switch search {
             case .success(let response):
-                if let _ = response.results  {
-                    self.userDefaults.set(title, forKey: app.userDefaultsKey)
-                    completion(response, nil)
+                if let movies = response.results  {
+                    if movies.count > 0 {
+                        self.userDefaults.set(title, forKey: app.userDefaultsKey)
+                        self.movies = movies
+                    }
                 } else {
-                    guard let error = response.error else { return }
-                    completion(nil, CustomError(description: error))
+                    if let error = response.error {
+                        self.hasError = CustomError(description: error)
+                    }
                 }
             case .failure(let error):
-                completion(nil, CustomError(description: error.localizedDescription))
+                self.hasError = CustomError(description: error.localizedDescription)
             }
         }
     }
@@ -49,18 +86,22 @@ class MovieListViewModel: NSObject {
 }
 
 extension MovieListViewModel {
-//    var numberOfSections: Int {
-//        return 1
-//    }
-//
-//    func numberOfRowsInSections(in section: Int) -> Int {
-//        return self.searchedMovies.count
-//    }
-//
-//    func movieIDAtIndex(at index: Int) -> String {
-//        let movie = self.searchedMovies[index]
-//        return movie.id
-//    }
+    var numberOfSections: Int {
+        return 1
+    }
+
+    func numberOfRowsInSections(in section: Int) -> Int {
+        return self.movies.count
+    }
+
+    func movieIDAtIndex(at index: Int) -> String {
+        let movie = self.movies[index]
+        return movie.id
+    }
+    
+    func getMovie(at index: Int) -> Movie {
+        return self.movies[index]
+    }
 }
 
 
