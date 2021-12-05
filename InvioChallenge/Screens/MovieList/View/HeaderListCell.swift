@@ -152,6 +152,7 @@ extension HeaderListCell: UISearchBarDelegate {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.searchTextField.resignFirstResponder()
         searchBar.searchTextField.text = ""
+        listTitle.text = "Recently search"
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
             searchFieldTopAnchor?.isActive = false

@@ -49,10 +49,6 @@ extension MovieListViewController {
                 guard let cell = item as? MovieListCell else { return }
                 cell.isHidden = true
             }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                self.notFoundView.isHidden = true
-            }
         }
         
         viewModel.reloadTableViewClosure = { [weak self] in

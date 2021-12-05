@@ -14,7 +14,6 @@ class MovieListViewModel {
     var updateIsLoading: (() -> ())?
     var reloadTableViewClosure: (() -> ())?
     var updateHasError: ((CustomError) -> ())?
-    var updateSearchEnd: (() -> ())?
     
     private(set) var isLoading: Bool = false {
         didSet {
@@ -34,13 +33,7 @@ class MovieListViewModel {
             self.updateHasError?(error)
         }
     }
-    
-    var isSearching: Bool = false {
-        didSet {
-            self.updateSearchEnd?()
-        }
-    }
-    
+
     init(service: NetworkService) {
         self.service = service
         if let title = userDefaults.value(forKey: app.userDefaultsKey) as? String {
@@ -90,6 +83,7 @@ class MovieListViewModel {
 
 
 extension MovieListViewModel {
+    
     var numberOfSections: Int {
         return 1
     }
@@ -106,6 +100,7 @@ extension MovieListViewModel {
     func getMovie(at index: Int) -> Movie {
         return self.movies[index]
     }
+    
 }
 
 
