@@ -34,8 +34,10 @@ class MovieDetailViewModel: NSObject {
     private(set) var movieDetail: MovieDetail? {
         didSet {
             guard let detail = movieDetail else { return }
-            posterCellInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: UIImage())
-            self.reloadTableViewClosure?()
+            self.fetchMoviePoster(urlString: detail.poster) { image in
+                self.posterCellInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
+                self.reloadTableViewClosure?()
+            }
         }
     }
     
@@ -57,6 +59,18 @@ class MovieDetailViewModel: NSObject {
             }
             guard let detail = data else { return }
             self.movieDetail = detail
+        }
+    }
+    
+    func fetchMoviePoster(urlString: String, completion: @escaping (UIImage) -> Void) {
+        app.service.fetchMoviePoster(urlString: urlString) { image, error in
+            if let _ = error {
+                if let noPoster = UIImage(named: "no_photo") {
+                    completion(noPoster)
+                }
+            }
+            guard let poster = image else { return }
+            completion(poster)
         }
     }
     
