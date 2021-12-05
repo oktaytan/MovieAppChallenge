@@ -11,7 +11,6 @@ class MovieDetailViewModel: NSObject {
     
     var movieID: String?
     
-    private(set) var poster: UIImage?
     private(set) var posterCellInfo: PosterCellInfo?
     
     var updateIsLoading: (() -> ())?

@@ -29,6 +29,8 @@
 		6662FFDC2756A0F600689B4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6662FFDB2756A0F600689B4F /* AppDelegate.swift */; };
 		6662FFE82756A0FB00689B4F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6662FFE72756A0FB00689B4F /* Assets.xcassets */; };
 		6662FFEB2756A0FB00689B4F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6662FFE92756A0FB00689B4F /* LaunchScreen.storyboard */; };
+		66642CDD275D54DF000B7DC6 /* MovieDetailView+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66642CDC275D54DF000B7DC6 /* MovieDetailView+Setup.swift */; };
+		66642CDF275D5536000B7DC6 /* MovieDetailView+DataSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66642CDE275D5536000B7DC6 /* MovieDetailView+DataSetup.swift */; };
 		66A91719275CEC8800D34DD0 /* MovieList+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66A91718275CEC8800D34DD0 /* MovieList+Setup.swift */; };
 		66BD4C03275B710C00F614C6 /* HeaderDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD4C02275B710C00F614C6 /* HeaderDetailCell.swift */; };
 		66BD4C05275B714C00F614C6 /* MoviePosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66BD4C04275B714C00F614C6 /* MoviePosterCell.swift */; };
@@ -75,6 +77,8 @@
 		6662FFE72756A0FB00689B4F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6662FFEA2756A0FB00689B4F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6662FFEC2756A0FB00689B4F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66642CDC275D54DF000B7DC6 /* MovieDetailView+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieDetailView+Setup.swift"; sourceTree = "<group>"; };
+		66642CDE275D5536000B7DC6 /* MovieDetailView+DataSetup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieDetailView+DataSetup.swift"; sourceTree = "<group>"; };
 		66A91718275CEC8800D34DD0 /* MovieList+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieList+Setup.swift"; sourceTree = "<group>"; };
 		66BD4C02275B710C00F614C6 /* HeaderDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderDetailCell.swift; sourceTree = "<group>"; };
 		66BD4C04275B714C00F614C6 /* MoviePosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePosterCell.swift; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 		662076212758120F0021D251 /* MovieDetail */ = {
 			isa = PBXGroup;
 			children = (
+				66642CDB275D54BC000B7DC6 /* Extensions */,
 				66DBF17127597E400044FB31 /* View */,
 				66207622275812270021D251 /* MovieDetailBuilder.swift */,
 				66207624275812460021D251 /* MovieDetailViewController.swift */,
@@ -250,6 +255,15 @@
 				6662FFE72756A0FB00689B4F /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		66642CDB275D54BC000B7DC6 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				66642CDC275D54DF000B7DC6 /* MovieDetailView+Setup.swift */,
+				66642CDE275D5536000B7DC6 /* MovieDetailView+DataSetup.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		66DBF17127597E400044FB31 /* View */ = {
@@ -425,6 +439,7 @@
 				66E987672758369C00C9947C /* WelcomeText.swift in Sources */,
 				662075872757808A0021D251 /* AppRouter.swift in Sources */,
 				66EFD4D52759033D00786646 /* LoadingIndicatorView.swift in Sources */,
+				66642CDF275D5536000B7DC6 /* MovieDetailView+DataSetup.swift in Sources */,
 				662075A2275791A60021D251 /* MovieDetail.swift in Sources */,
 				662075B32757BE320021D251 /* NetworkService.swift in Sources */,
 				66BD4C14275C088300F614C6 /* CustomError.swift in Sources */,
@@ -450,6 +465,7 @@
 				660491F3275ABCD6005A3C4C /* HeaderListCell.swift in Sources */,
 				6628F101275A547000F48F3E /* String+EstimatedHeight.swift in Sources */,
 				66207625275812460021D251 /* MovieDetailViewController.swift in Sources */,
+				66642CDD275D54DF000B7DC6 /* MovieDetailView+Setup.swift in Sources */,
 				66EFD4DD27590BBB00786646 /* MovieListCell.swift in Sources */,
 				6620758A275781470021D251 /* MovieListBuilder.swift in Sources */,
 				660491EF275AB163005A3C4C /* BaseCell+Extensions.swift in Sources */,
