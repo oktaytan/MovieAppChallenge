@@ -11,11 +11,13 @@ extension MovieDetailViewController {
     
     func fetchData() {
         loadingView.isLoading = self.viewModel.isLoading
+        self.loadingView.isHidden = !self.viewModel.isLoading
+        self.collectionView.isHidden = self.viewModel.isLoading
     
         viewModel.updateIsLoading = { [weak self] in
             guard let self = self else { return }
             self.loadingView.isLoading = self.viewModel.isLoading
-            self.loadingView.isHidden = self.viewModel.isLoading
+            self.loadingView.isHidden = !self.viewModel.isLoading
             self.collectionView.isHidden = self.viewModel.isLoading
             self.navigationItem.setHidesBackButton(self.viewModel.isLoading, animated: true)
         }

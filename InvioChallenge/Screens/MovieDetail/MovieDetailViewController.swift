@@ -14,12 +14,10 @@ final class MovieDetailViewController: UICollectionViewController {
             guard let vm = viewModel else { return }
             if let id = vm.movieID {
                 self.viewModel.fetchMovieDetail(id: id)
-                fetchData()
             }
         }
     }
     
-    var movieDetail: MovieDetail?
     let loadingView = LoadingIndicatorView()
     let notFoundView = MovieNotFoundView()
     var moviePosterInfo: PosterCellInfo?
@@ -28,6 +26,7 @@ final class MovieDetailViewController: UICollectionViewController {
         setupView()
         setupHierarchy()
         setupLayout()
+        fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +59,7 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         case 0:
             return .init(width: view.frame.width, height: 300)
         case 1:
-            if self.movieDetail?.plot == "N/A" {
+            if let synopsis = self.viewModel.movieDetail?.plot, synopsis == "N/A" {
                 return .zero
             }
             return .init(width: view.frame.width, height: 150)
