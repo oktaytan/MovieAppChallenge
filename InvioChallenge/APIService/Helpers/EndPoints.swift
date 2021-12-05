@@ -11,6 +11,7 @@ enum EndPoints {
     case Search
 }
 
+// API URL için endpoint ayarlama
 extension EndPoints {
     var path: String {
         let baseURL = "http://www.omdbapi.com"

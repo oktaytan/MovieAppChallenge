@@ -9,6 +9,7 @@ import UIKit
 
 extension String {
     
+    // Bir view'in yüksekliğini içerisndeki text'in kapladığı alana göre dinamik olarak ayarlar
     func estimatedHeightForText(view: UIView, fontSize: CGFloat) -> CGFloat {
         
         let widthTextView = view.frame.width - 100

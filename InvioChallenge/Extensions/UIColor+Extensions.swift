@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Uygulamada kullanılan renk düzenleri set ediyor
 extension UIColor {
     
     static let bgColor: UIColor = UIColor(named: "bgColor") ?? .systemBlue

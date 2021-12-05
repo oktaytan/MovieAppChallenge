@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Detay sayfasında servisden gelen data önce bu model'e parse edilecek
 struct PosterCellInfo {
     var duration: String
     var release: String

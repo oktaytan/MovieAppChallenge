@@ -16,8 +16,15 @@ struct AnchorContraints {
     var height: NSLayoutConstraint?
 }
 
+
+/*
+ *
+ * Auto Layout için extension
+ *
+ */
 extension UIView {
     
+    // Bir view'i başka bir view'e göre ayarlama
     @discardableResult
     func anchor(top: NSLayoutYAxisAnchor?,
                 bottom: NSLayoutYAxisAnchor?,
@@ -59,6 +66,7 @@ extension UIView {
         return aConstraints
     }
     
+    // View'i parent view'in içine doldurur.
     func fillSuperview(padding: UIEdgeInsets = .zero) {
         
         translatesAutoresizingMaskIntoConstraints = false
@@ -81,6 +89,7 @@ extension UIView {
         
     }
     
+    // Bir view'i başka bir view'in ortasına hizalar
     func centerWithSuperview(size: CGSize = .zero) {
         
         translatesAutoresizingMaskIntoConstraints = false
@@ -103,16 +112,19 @@ extension UIView {
         
     }
     
+    // Bir view'i başka bir view'i X koordinatında ayarlama
     func centerX(_ anchor: NSLayoutXAxisAnchor) {
         translatesAutoresizingMaskIntoConstraints = false
         centerXAnchor.constraint(equalTo: anchor).isActive = true
     }
     
+    // Bir view'i başka bir view'i Y koordinatında ayarlama
     func centerY(_ anchor: NSLayoutYAxisAnchor) {
         translatesAutoresizingMaskIntoConstraints = false
         centerYAnchor.constraint(equalTo: anchor).isActive = true
     }
     
+    // Bir view'i parent view'in X koordinatına göre ayarlama
     func centerXSuperView() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superViewCenterXAnchor = superview?.centerXAnchor {
@@ -120,6 +132,7 @@ extension UIView {
         }
     }
     
+    // Bir view'i parent view'in Y koordinatına göre ayarlama
     func centerYSuperView() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superViewCenterYAnchor = superview?.centerYAnchor {
@@ -127,6 +140,7 @@ extension UIView {
         }
     }
     
+    // Bir view'e yükseklik set eder
     @discardableResult
     func constraintHeight(_ height: CGFloat) -> AnchorContraints {
         
@@ -138,6 +152,7 @@ extension UIView {
         return const
     }
     
+    // Bir view'e genişlik set eder
     @discardableResult
     func constraintWidth(_ width: CGFloat) -> AnchorContraints {
         
@@ -149,6 +164,7 @@ extension UIView {
         return const
     }
     
+    // Bir view'e gölge set eder
     func addShadow(opacity: Float = 0, radius: CGFloat = 0, offset: CGSize = .zero, color: UIColor = .black) {
         layer.shadowOpacity = opacity
         layer.shadowRadius = radius

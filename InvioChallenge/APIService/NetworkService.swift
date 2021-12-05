@@ -15,13 +15,19 @@ final class NetworkService {
     
     private init() { }
     
+    // Singleton yapı için service instance set ediliyor
     static var sharedInstance: NetworkService = {
         return NetworkService()
     }()
     
 }
 
-
+/*
+ * NetworkService - Film datasını alacağımız servis
+ * fetchMovies() - Arama yapılınca ve app ilk açıldığında çalışacak metot
+ * fetchMovieDetail() - Listelenen filmlerin detaylarını alacak metot
+ * fetchMoviePoster() - Filmlerin afişlerini getirecek metot
+ */
 extension NetworkService {
     
     func fetchMovies(for title: String, page: Int = 1, handler: @escaping (Result<Search>) -> Void) {
@@ -81,7 +87,6 @@ extension NetworkService {
         }
         
     }
-    
 
 }
 

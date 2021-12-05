@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Uygulamaya ait sabitleri tutacak container
 let app = AppContainer()
 
 final class AppContainer {

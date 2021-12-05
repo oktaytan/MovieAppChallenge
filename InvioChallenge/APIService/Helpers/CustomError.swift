@@ -11,6 +11,7 @@ protocol OurErrorProtocol: LocalizedError {
     var description: String { get }
 }
 
+// Service hataları için custom error
 struct CustomError: OurErrorProtocol {
     var description: String
 
