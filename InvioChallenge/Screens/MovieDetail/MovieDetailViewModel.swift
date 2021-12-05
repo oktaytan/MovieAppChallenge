@@ -8,36 +8,57 @@
 import UIKit
 
 class MovieDetailViewModel: NSObject {
+    
     var movieID: String?
-    private var poster: UIImage?
+    
+    private(set) var poster: UIImage?
+    private(set) var posterCellInfo: PosterCellInfo?
+    
+    var updateIsLoading: (() -> ())?
+    var reloadTableViewClosure: (() -> ())?
+    var updateHasError: ((CustomError) -> ())?
+    
+    private(set) var isLoading: Bool = false {
+        didSet {
+            self.updateIsLoading?()
+        }
+    }
+    
+    private(set) var hasError: CustomError? {
+        didSet {
+            guard let error = hasError else { return }
+            self.updateHasError?(error)
+        }
+    }
+    
+    private(set) var movieDetail: MovieDetail? {
+        didSet {
+            guard let detail = movieDetail else { return }
+            posterCellInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: UIImage())
+            self.reloadTableViewClosure?()
+        }
+    }
     
     init(_ id: String) {
         self.movieID = id
         super.init()
     }
     
-    func fetchMovieDetail(movieID id: String, completion: @escaping (MovieDetail?, Error?) -> Void) {
-        app.service.fetchMovieDetail(for: id) { (data, error) in
+    func fetchMovieDetail(id: String) {
+        self.isLoading = true
+        
+        app.service.fetchMovieDetail(for: id) { [weak self] (data, error) in
+            guard let self = self else { return }
+            
+            self.isLoading = false
+            
             if let error = error {
-                completion(nil, error)
+                self.hasError = CustomError(description: error.localizedDescription)
             }
             guard let detail = data else { return }
-            completion(detail, nil)
+            self.movieDetail = detail
         }
     }
     
-//    func setMoviePoster() {
-//        guard let detail = self.detail else { return }
-//        let posterURLString = detail.poster
-//
-//        app.service.fetchMoviePoster(urlString: posterURLString) { [weak self] image, error in
-//            if let error = error {
-//                print(error.localizedDescription)
-//            }
-//
-//            guard let poster = image else { return }
-//            self?.poster = poster
-//        }
-//    }
 }
 

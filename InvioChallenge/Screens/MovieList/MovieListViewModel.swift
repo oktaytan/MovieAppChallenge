@@ -8,6 +8,7 @@
 import UIKit
 
 class MovieListViewModel {
+    
     private var service: NetworkService!
     private var userDefaults = UserDefaults.standard
 
@@ -43,10 +44,12 @@ class MovieListViewModel {
     
     func fetchMovies(title: String) {
         self.isLoading = true
+        
         app.service.fetchMovies(for: title) { [weak self] search in
             guard let self = self else { return }
             
             self.isLoading = false
+            
             switch search {
             case .success(let response):
                 if let movies = response.results {
@@ -61,7 +64,6 @@ class MovieListViewModel {
                 self.hasError = CustomError(description: error.localizedDescription)
             }
         }
-        
         
     }
     

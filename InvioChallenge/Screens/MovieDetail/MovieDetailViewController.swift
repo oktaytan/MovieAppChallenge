@@ -12,15 +12,17 @@ final class MovieDetailViewController: UICollectionViewController {
     var viewModel: MovieDetailViewModel! {
         didSet {
             guard let vm = viewModel else { return }
+            fetchData()
             if let id = vm.movieID {
-                getMovieDetail(movieID: id)
+                self.viewModel.fetchMovieDetail(id: id)
+                fetchData()
             }
         }
     }
     
     var movieDetail: MovieDetail?
     let loadingView = LoadingIndicatorView()
-    let movieNotFound = MovieNotFoundView()
+    let notFoundView = MovieNotFoundView()
     var moviePosterInfo: PosterCellInfo?
     
     override func viewDidLoad() {
@@ -45,53 +47,43 @@ final class MovieDetailViewController: UICollectionViewController {
     
     fileprivate func setupHierarchy() {
         view.addSubview(loadingView)
-        view.addSubview(movieNotFound)
+        view.addSubview(notFoundView)
     }
     
     fileprivate func setupLayout() {
         loadingView.centerWithSuperview()
         loadingView.isHidden = true
-        movieNotFound.centerWithSuperview(size: .init(width: self.view.bounds.width, height: 100))
-        movieNotFound.isHidden = true
+        notFoundView.centerWithSuperview(size: .init(width: self.view.bounds.width, height: 100))
+        notFoundView.isHidden = true
     }
     
-    func getMovieDetail(movieID: String) {
-        collectionView.isHidden = true
-        loadingView.isHidden = false
-        loadingView.isLoading = true
-        self.navigationItem.setHidesBackButton(false, animated: true)
-        
-        app.service.fetchMovieDetail(for: movieID) { data, error in
-            if let _ = error {
-                self.notFound()
-                return
-            }
-            
-            guard let detail = data else {
-                self.notFound()
-                return
-            }
-            
-            self.movieDetail = detail
-            self.movieFound()
+    func fetchData() {
+        loadingView.isLoading = self.viewModel.isLoading
     
-            app.service.fetchMoviePoster(urlString: detail.poster) { data, error in
-                if let image = data {
-                    DispatchQueue.main.async {
-                        self.moviePosterInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
-                        self.collectionView.reloadData()
-                    }
-                }
-            }
-            
-            self.collectionView.reloadData()
+        viewModel.updateIsLoading = { [weak self] in
+            guard let self = self else { return }
+            self.loadingView.isLoading = self.viewModel.isLoading
+            self.loadingView.isHidden = self.viewModel.isLoading
+            self.collectionView.isHidden = self.viewModel.isLoading
+            self.navigationItem.setHidesBackButton(self.viewModel.isLoading, animated: true)
+        }
+        
+        viewModel.updateHasError = { [weak self] error in
+            guard let self = self else { return }
+            self.notFound()
+        }
+        
+        viewModel.reloadTableViewClosure = { [weak self] in
+            guard let self = self else { return }
+            self.movieFound()
         }
     }
     
     fileprivate func notFound() {
         self.loadingView.isLoading = false
+        self.collectionView.isHidden = true
         self.loadingView.isHidden = true
-        self.movieNotFound.isHidden = false
+        self.notFoundView.isHidden = false
         self.navigationItem.setHidesBackButton(false, animated: true)
         self.navigationItem.title = "Not Found"
     }
@@ -99,11 +91,15 @@ final class MovieDetailViewController: UICollectionViewController {
     fileprivate func movieFound() {
         self.loadingView.isLoading = false
         self.loadingView.isHidden = true
-        self.movieNotFound.isHidden = true
+        self.notFoundView.isHidden = true
+        self.collectionView.reloadData()
         self.collectionView.isHidden = false
         self.navigationItem.setHidesBackButton(true, animated: true)
+        self.collectionView.reloadData()
+    
     }
 }
+
 
 
 // MARK: - CollectionView Delegation
@@ -143,7 +139,7 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderDetailCell.id, for: indexPath) as? HeaderDetailCell else { return UICollectionReusableView() }
             
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 if detail.title.count > 24 {
                     let subMovieTitle = detail.title.prefix(24)
                     header.movieTitle.text = "\(subMovieTitle).."
@@ -164,11 +160,11 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         switch indexPath.item {
         case 0:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviePosterCell.id, for:  indexPath) as? MoviePosterCell else { return UICollectionViewCell() }
-            cell.cellInfo = self.moviePosterInfo
+            cell.cellInfo = self.viewModel.posterCellInfo
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SynopsisCell.id, for:  indexPath) as? SynopsisCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 cell.summary = detail.plot
                 let height = detail.plot.estimatedHeightForText(view: cell, fontSize: 15) + 50
                 cell.frame.size.height = height
@@ -176,21 +172,21 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             return cell
         case 2:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Director" : detail.director]
                 cell.detailInfo = info
             }
             return cell
         case 3:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Writer" : detail.writer]
                 cell.detailInfo = info
             }
             return cell
         case 4:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Actors" : detail.actors]
                 let height = detail.actors.estimatedHeightForText(view: cell, fontSize: 15)
                 cell.frame.size.height = height + 10
@@ -199,21 +195,21 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             return cell
         case 5:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Genre" : detail.genre]
                 cell.detailInfo = info
             }
             return cell
         case 6:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Country" : detail.country]
                 cell.detailInfo = info
             }
             return cell
         case 7:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.id, for: indexPath) as? DetailCell else { return UICollectionViewCell() }
-            if let detail = self.movieDetail {
+            if let detail = self.viewModel.movieDetail {
                 let info = ["Awards" : detail.awards]
                 cell.detailInfo = info
             }
