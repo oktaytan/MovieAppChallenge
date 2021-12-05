@@ -32,11 +32,7 @@ class MovieDetailViewModel: NSObject {
     
     private(set) var movieDetail: MovieDetail? {
         didSet {
-            guard let detail = movieDetail else { return }
-            self.fetchMoviePoster(urlString: detail.poster) { image in
-                self.posterCellInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
-                self.reloadTableViewClosure?()
-            }
+            self.reloadTableViewClosure?()
         }
     }
     
@@ -51,13 +47,16 @@ class MovieDetailViewModel: NSObject {
         app.service.fetchMovieDetail(for: id) { [weak self] (data, error) in
             guard let self = self else { return }
             
-            self.isLoading = false
-            
             if let error = error {
                 self.hasError = CustomError(description: error.localizedDescription)
             }
             guard let detail = data else { return }
-            self.movieDetail = detail
+            
+            self.fetchMoviePoster(urlString: detail.poster) { image in
+                self.posterCellInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
+                self.isLoading = false
+                self.movieDetail = detail
+            }
         }
     }
     
