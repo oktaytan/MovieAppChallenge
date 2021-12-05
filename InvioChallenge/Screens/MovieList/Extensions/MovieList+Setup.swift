@@ -28,7 +28,7 @@ extension MovieListViewController {
     }
     
     func setupLayout() {
-        notFoundView.centerWithSuperview(size: .init(width: 200, height: 200))
+        notFoundView.centerWithSuperview(size: .init(width: view.frame.width - 48, height: 80))
         notFoundView.isHidden = true
         
         loadingView.centerWithSuperview()
@@ -37,11 +37,34 @@ extension MovieListViewController {
     
     func fetchData() {
         loadingView.isLoading = self.viewModel.isLoading
-        viewModel.updateFetchStatus = { [weak self] in
+        viewModel.updateIsLoading = { [weak self] in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-                self.loadingView.isLoading = self.viewModel.isLoading
+            self.loadingView.isLoading = self.viewModel.isLoading
+        }
+        
+        viewModel.updateHasError = { [weak self] error in
+            guard let self = self else { return }
+            self.notFoundView.isHidden = false
+            self.collectionView.subviews.forEach { item in
+                guard let cell = item as? MovieListCell else { return }
+                cell.isHidden = true
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                self.notFoundView.isHidden = true
+                self.collectionView.subviews.forEach { item in
+                    guard let cell = item as? MovieListCell else { return }
+                    cell.isHidden = false
+                }
+            }
+        }
+        
+        viewModel.reloadTableViewClosure = { [weak self] in
+            guard let self = self else { return }
+            self.collectionView.reloadData()
+            self.collectionView.subviews.forEach { item in
+                guard let cell = item as? MovieListCell else { return }
+                cell.isHidden = false
             }
         }
     }

@@ -24,7 +24,7 @@ final class HeaderListCell: BaseCell {
         if let _ = userDefaults.value(forKey: app.userDefaultsKey) {
             label.text = "Recently search"
         } else {
-            label.text = "Search results"
+            label.text = ""
         }
         
         label.font = .systemFont(ofSize: 17, weight: .semibold)

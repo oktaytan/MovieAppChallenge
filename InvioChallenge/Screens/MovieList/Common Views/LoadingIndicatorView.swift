@@ -37,7 +37,6 @@ final class LoadingIndicatorView: UIStackView {
         label.text = "Loading.."
         label.font = .preferredFont(forTextStyle: .headline)
         label.textColor = .primaryColor
-        label.alpha = 0
         return label
     }()
     

@@ -10,18 +10,27 @@ import UIKit
 class MovieListViewModel {
     private var service: NetworkService!
     private var userDefaults = UserDefaults.standard
-    
-    private(set) var movies: [Movie] = []
-    var updateFetchStatus: (() -> ())?
-    private(set) var hasError: CustomError? {
-        didSet {
-            self.updateFetchStatus?()
-        }
-    }
+
+    var updateIsLoading: (() -> ())?
+    var reloadTableViewClosure: (() -> ())?
+    var updateHasError: ((CustomError) -> ())?
     
     private(set) var isLoading: Bool = false {
         didSet {
-            self.updateFetchStatus?()
+            self.updateIsLoading?()
+        }
+    }
+    
+    private(set) var movies: [Movie] = [] {
+        didSet {
+            self.reloadTableViewClosure?()
+        }
+    }
+    
+    private(set) var hasError: CustomError? {
+        didSet {
+            guard let error = hasError else { return }
+            self.updateHasError?(error)
         }
     }
     
@@ -31,24 +40,6 @@ class MovieListViewModel {
             self.fetchMovies(title: title)
         }
     }
-    
-//    func fetchMovies(title: String, completion: @escaping (Search?, CustomError?) -> Void) {
-//        app.service.fetchMovies(for: title) { [weak self] search in
-//            guard let self = self else { return }
-//            switch search {
-//            case .success(let response):
-//                if let _ = response.results  {
-//                    self.userDefaults.set(title, forKey: app.userDefaultsKey)
-//                    completion(response, nil)
-//                } else {
-//                    guard let error = response.error else { return }
-//                    completion(nil, CustomError(description: error))
-//                }
-//            case .failure(let error):
-//                completion(nil, CustomError(description: error.localizedDescription))
-//            }
-//        }
-//    }
     
     func fetchMovies(title: String) {
         self.isLoading = true

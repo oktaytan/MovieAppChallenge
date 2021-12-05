@@ -31,7 +31,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     
     func searchButtonTap(title: String, listTitle: UILabel) {
         
-        endingSearch()
+        self.endingSearch()
         self.notFoundView.isHidden = true
         collectionView.subviews.forEach { item in
             guard let cell = item as? MovieListCell else { return }
@@ -39,30 +39,8 @@ extension MovieListViewController: SearchBarActiveDelegation {
         }
         
         self.viewModel.fetchMovies(title: title)
-        self.viewModel.updateFetchStatus = {
-            self.loadingView.isLoading = self.viewModel.isLoading
-            
-            if let error = self.viewModel.hasError?.description {
-                DispatchQueue.main.async {
-                    self.notFoundView.isHidden = false
-                    self.notFoundView.notFoundText.text = error.description
-                    self.collectionView.subviews.forEach { item in
-                        guard let cell = item as? MovieListCell else { return }
-                        cell.isHidden = true
-                    }
-                    self.collectionView.reloadData()
-                }
-            }
-
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-            
-            self.collectionView.subviews.forEach { item in
-                guard let cell = item as? MovieListCell else { return }
-                cell.isHidden = false
-            }
-        }
+        self.fetchData()
+        listTitle.text = "Recently search"
     }
     
     @objc func endingSearch() {
