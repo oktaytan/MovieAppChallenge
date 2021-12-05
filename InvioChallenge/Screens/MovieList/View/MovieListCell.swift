@@ -84,6 +84,5 @@ final class MovieListCell: BaseCell {
         moviePoster.constraintWidth(100)
         
         leftStackView.anchor(top: topAnchor, bottom: bottomAnchor, leading: moviePoster.trailingAnchor, trailing: trailingAnchor, padding: .init(top: 12, left: 24, bottom: 12, right: 24))
-        
     }
 }

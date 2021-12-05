@@ -27,7 +27,6 @@ extension MovieListViewController: SearchBarActiveDelegation {
                 cell.isHidden = false
             }
         }
-        collectionView.reloadData()
     }
     
     func searchButtonTap(title: String, listTitle: UILabel) {

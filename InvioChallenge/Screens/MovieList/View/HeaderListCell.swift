@@ -123,10 +123,14 @@ extension HeaderListCell: UISearchBarDelegate {
             searchFieldTopAnchor?.isActive = false
             searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: -20)
             searchFieldTopAnchor?.isActive = true
-            searchDescription.isHidden = false
-            searchDescription.alpha = 1
             layoutIfNeeded()
-        }, completion: nil)
+        }) { _ in
+            UIView.animate(withDuration: 0.2) { [self] in
+                searchDescription.isHidden = false
+                searchDescription.alpha = 1
+                layoutIfNeeded()
+            }
+        }
 
         return true
     }
@@ -142,22 +146,26 @@ extension HeaderListCell: UISearchBarDelegate {
         searchBar.searchTextField.resignFirstResponder()
         searchBar.searchTextField.text = ""
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
-            topMenu.transform = .identity
-            topMenu.alpha = 1
-            welcomeText.transform = .identity
-            welcomeText.alpha = 1
             searchFieldTopAnchor?.isActive = false
             searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: welcomeText.bottomAnchor, constant: 11)
             searchFieldTopAnchor?.isActive = true
             searchDescription.alpha = 0
             searchDescription.isHidden = true
+            searchDescription.transform = .identity
             searchButton.transform = .identity
             searchButton.alpha = 0
             searchButton.isHidden = true
-            listTitle.isHidden = false
-            listTitle.alpha = 1
             layoutIfNeeded()
-        }, completion: nil)
+        }) { _ in
+            UIView.animate(withDuration: 0.05, delay: 0, options: .curveEaseInOut, animations: { [self] in
+                topMenu.transform = .identity
+                topMenu.alpha = 1
+                welcomeText.transform = .identity
+                welcomeText.alpha = 1
+                listTitle.isHidden = false
+                listTitle.alpha = 1
+            }, completion: nil)
+        }
     }
     
     func setSearchButtonAnimation(_ text: String) {
