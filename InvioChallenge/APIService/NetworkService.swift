@@ -67,14 +67,19 @@ extension NetworkService {
     }
     
     func fetchMoviePoster(urlString: String, handler: @escaping (UIImage?, Error?) -> Void) {
-        AF.request(urlString).responseImage { (response: DataResponse<UIImage, AFError>) in
-            switch response.result {
-            case .success(let image):
-                handler(image, nil)
-            case .failure(let error):
-                handler(nil, error)
+        if urlString != "N/A" {
+            AF.request(urlString).responseImage { (response: DataResponse<UIImage, AFError>) in
+                switch response.result {
+                case .success(let image):
+                    handler(image, nil)
+                case .failure(let error):
+                    handler(nil, error)
+                }
             }
+        } else {
+            handler(nil, CustomError(description: "URL is not valid!"))
         }
+        
     }
     
 

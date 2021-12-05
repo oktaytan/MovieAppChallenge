@@ -45,13 +45,9 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
         
         let movie = self.viewModel.getMovie(at: indexPath.item)
         cell.movie = movie
-        
         viewModel.fetchMoviePoster(urlString: movie.poster) { image in
-            if let poster = image as? UIImage {
-                cell.moviePoster.image = poster
-            }
+            cell.moviePoster.image = image
         }
-        
         return cell
     }
     

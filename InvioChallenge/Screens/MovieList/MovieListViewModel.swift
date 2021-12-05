@@ -13,6 +13,7 @@ class MovieListViewModel {
 
     var updateIsLoading: (() -> ())?
     var reloadTableViewClosure: (() -> ())?
+    var updatePoster: ((UIImage) -> ())?
     var updateHasError: ((CustomError) -> ())?
     
     private(set) var isLoading: Bool = false {
@@ -24,6 +25,12 @@ class MovieListViewModel {
     private(set) var movies: [Movie] = [] {
         didSet {
             self.reloadTableViewClosure?()
+        }
+    }
+    
+    private(set) var moviePoster: UIImage? = nil {
+        didSet {
+            
         }
     }
     
@@ -73,12 +80,15 @@ class MovieListViewModel {
                     completion(noPoster)
                 }
             }
-            
             guard let poster = image else { return }
             completion(poster)
         }
     }
 }
+
+
+
+
 
 extension MovieListViewModel {
     var numberOfSections: Int {
