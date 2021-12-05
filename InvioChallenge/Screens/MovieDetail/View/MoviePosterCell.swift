@@ -15,7 +15,7 @@ final class MoviePosterCell: BaseCell {
         didSet {
             guard let info = cellInfo else { return }
             self.movieRating.rating = Double(info.rate)!
-            self.moviePoster.image = info.posterImage
+            self.moviePoster.image = info.posterImage ?? UIImage(named: "no_photo")
             self.duration.text = info.duration
             self.release.text = info.release.components(separatedBy: "–")[0]
             self.language.text = info.language.components(separatedBy: ",")[0]

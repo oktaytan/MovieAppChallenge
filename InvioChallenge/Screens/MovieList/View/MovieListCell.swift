@@ -16,7 +16,7 @@ final class MovieListCell: BaseCell {
             guard let mv = movie else { return }
             movieTitle.text = mv.title
             movieYear.text = mv.year
-            movieType.text = mv.type
+            movieType.text = mv.type.capitalized
             movieID.text = "IMDB ID : \(mv.id)"
         }
     }

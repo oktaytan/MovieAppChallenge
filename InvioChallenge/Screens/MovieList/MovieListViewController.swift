@@ -12,6 +12,7 @@ final class MovieListViewController: UICollectionViewController {
     var viewModel: MovieListViewModel!
     var loadingView = LoadingIndicatorView()
     var notFoundView = MovieNotFoundView()
+    var userDefaults = UserDefaults.standard
     
     var movies: [Movie] = []
     
@@ -20,6 +21,38 @@ final class MovieListViewController: UICollectionViewController {
         setupView()
         setupHierarchy()
         setupLayout()
+        
+        
+        if let lastTitle = userDefaults.value(forKey: app.userDefaultsKey) as? String {
+            collectionView.subviews.forEach { item in
+                guard let cell = item as? MovieListCell else { return }
+                cell.isHidden = true
+            }
+            
+            loadingView.isHidden = false
+            loadingView.isLoading = true
+            viewModel.fetchMovies(title: lastTitle) { [weak self] (search, error) in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    self.loadingView.isLoading = false
+                    self.loadingView.isHidden = true
+                    self.notFoundView.isHidden = false
+                    self.notFoundView.notFoundText.text = error.description
+                } else {
+                    guard let data = search, let results = data.results else { return }
+                    self.movies = results
+                    self.loadingView.isLoading = false
+                    self.loadingView.isHidden = true
+                    self.collectionView.subviews.forEach { item in
+                        guard let cell = item as? MovieListCell else { return }
+                        cell.isHidden = false
+                    }
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+        
     }
     
     func setupView() {
@@ -69,7 +102,15 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.id, for: indexPath) as? MovieListCell else { return UICollectionViewCell() }
-        cell.movie = self.movies[indexPath.item]
+        
+        let movie = self.movies[indexPath.item]
+        cell.movie = movie
+        viewModel.fetchMoviePoster(urlString: movie.poster) { image in
+            if let poster = image as? UIImage {
+                cell.moviePoster.image = image
+            }
+        }
+        
         return cell
     }
     
@@ -94,82 +135,9 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        app.router.goToDetail("tt0489099")
+        let movieID = self.movies[indexPath.item].id
+        app.router.goToDetail(movieID)
     }
 }
 
-
-
-// MARK: - SearchBar Delegation
-extension MovieListViewController: SearchBarActiveDelegation {
-    
-    func searchBegin() {
-        collectionView.isScrollEnabled = false
-        notFoundView.isHidden = true
-        loadingView.isHidden = true
-        collectionView.subviews.forEach { item in
-            if let cell = item as? MovieListCell {
-                cell.isHidden = true
-            }
-        }
-    }
-    
-    func searchEnd() {
-        collectionView.isScrollEnabled = true
-        collectionView.subviews.forEach { item in
-            if let cell = item as? MovieListCell {
-                cell.isHidden = false
-            }
-        }
-        collectionView.reloadData()
-    }
-    
-    func searchButtonTap(title: String, listTitle: UILabel) {
-        
-        endingSearch()
-        collectionView.subviews.forEach { item in
-            guard let cell = item as? MovieListCell else { return }
-            cell.isHidden = true
-        }
-        
-        loadingView.isHidden = false
-        loadingView.isLoading = true
-        
-        viewModel.fetchMovies(title: title) { [weak self] (search, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                listTitle.text = "Total results : 0"
-                listTitle.isHidden = false
-                self.notFoundView.isHidden = false
-                self.notFoundView.notFoundText.text = error.description
-            } else {
-                guard let data = search, let results = data.results else { return }
-                self.movies = results
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                listTitle.text = "Search results"
-                listTitle.isHidden = false
-                self.collectionView.subviews.forEach { item in
-                    guard let cell = item as? MovieListCell else { return }
-                    cell.isHidden = false
-                }
-                self.collectionView.reloadData()
-            }
-            
-            
-        }
-    }
-    
-    @objc func endingSearch() {
-        collectionView.subviews.forEach { item in
-            if let cell = item as? HeaderListCell {
-                cell.closeSearch(cell.searchField)
-            }
-        }
-    }
-    
-}
 

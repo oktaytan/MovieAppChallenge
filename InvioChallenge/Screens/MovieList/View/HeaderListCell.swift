@@ -11,6 +11,7 @@ final class HeaderListCell: BaseCell {
     
     static let id = "HeaderListCell"
     var delegate: SearchBarActiveDelegation?
+    var userDefaults = UserDefaults.standard
     
     let topMenu = TopNavigationView()
     let welcomeText = WelcomeText()
@@ -22,6 +23,11 @@ final class HeaderListCell: BaseCell {
         label.text = "Recently Searches"
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = .textColor
+        if let lastSearch = userDefaults.value(forKey: app.userDefaultsKey) as? String {
+            label.alpha = 1
+        } else {
+            label.alpha = 0
+        }
         return label
     }()
     
@@ -71,7 +77,7 @@ final class HeaderListCell: BaseCell {
         
         listTitle.anchor(top: nil, bottom: bottomAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 24, bottom: 24, right: 24))
         
-        searchDescription.anchor(top: searchField.bottomAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+        searchDescription.anchor(top: topAnchor, bottom: nil, leading: nil, trailing: nil, padding: .init(top: 60, left: 0, bottom: 0, right: 0))
         searchDescription.centerXSuperView()
         searchDescription.isHidden = true
         searchDescription.alpha = 0
@@ -158,7 +164,7 @@ extension HeaderListCell: UISearchBarDelegate {
         if text.count > 0 {
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) { [weak self] in
                 self?.searchButton.isHidden = false
-                self?.searchDescription.transform = CGAffineTransform(translationX: 0, y: -20)
+                self?.searchDescription.transform = CGAffineTransform(translationX: 0, y: -30)
                 self?.searchDescription.alpha = 0
                 self?.searchButton.alpha = 1
                 self?.searchButton.transform = CGAffineTransform(translationX: 0, y: -30)

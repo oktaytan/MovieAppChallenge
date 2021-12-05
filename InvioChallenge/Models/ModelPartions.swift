@@ -12,6 +12,6 @@ struct PosterCellInfo {
     var release: String
     var language: String
     var rate: String
-    var posterImage: UIImage
+    var posterImage: UIImage?
 }
 

@@ -59,41 +59,48 @@ final class MovieDetailViewController: UICollectionViewController {
         collectionView.isHidden = true
         loadingView.isHidden = false
         loadingView.isLoading = true
+        self.navigationItem.setHidesBackButton(false, animated: true)
         
         app.service.fetchMovieDetail(for: movieID) { data, error in
             if let _ = error {
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                self.movieNotFound.isHidden = false
-                self.navigationItem.setHidesBackButton(false, animated: true)
+                self.notFound()
                 return
             }
             
             guard let detail = data else {
-                self.loadingView.isLoading = false
-                self.loadingView.isHidden = true
-                self.movieNotFound.isHidden = false
-                self.navigationItem.setHidesBackButton(false, animated: true)
+                self.notFound()
                 return
             }
             
+            self.movieDetail = detail
+            self.movieFound()
+    
             app.service.fetchMoviePoster(urlString: detail.poster) { data, error in
-                
                 if let image = data {
                     DispatchQueue.main.async {
-                        self.movieDetail = detail
-                        self.loadingView.isLoading = false
-                        self.loadingView.isHidden = true
-                        self.movieNotFound.isHidden = true
-                        self.collectionView.isHidden = false
-                        self.collectionView.reloadData()
                         self.moviePosterInfo = PosterCellInfo(duration: detail.runtime, release: detail.year, language: detail.language, rate: detail.imdbRating, posterImage: image)
+                        self.collectionView.reloadData()
                     }
                 }
-                
             }
             
+            self.collectionView.reloadData()
         }
+    }
+    
+    fileprivate func notFound() {
+        self.loadingView.isLoading = false
+        self.loadingView.isHidden = true
+        self.movieNotFound.isHidden = false
+        self.navigationItem.setHidesBackButton(false, animated: true)
+    }
+    
+    fileprivate func movieFound() {
+        self.loadingView.isLoading = false
+        self.loadingView.isHidden = true
+        self.movieNotFound.isHidden = true
+        self.collectionView.isHidden = false
+        self.navigationItem.setHidesBackButton(true, animated: true)
     }
 }
 
@@ -119,6 +126,9 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
         case 0:
             return .init(width: view.frame.width, height: 300)
         case 1:
+            if self.movieDetail?.plot == "N/A" {
+                return .zero
+            }
             return .init(width: view.frame.width, height: 150)
         default:
             return .init(width: view.frame.width, height: 50)
@@ -212,7 +222,6 @@ extension MovieDetailViewController: UICollectionViewDelegateFlowLayout {
             return cell
         }
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return .init(width: view.frame.width, height: 45)

@@ -1,8 +1,8 @@
 //
-//  LastSearchTitle.swift
+//  CoreDataService.swift
 //  InvioChallenge
 //
-//  Created by Oktay Tanrıkulu on 1.12.2021.
+//  Created by Oktay Tanrıkulu on 5.12.2021.
 //
 
 import UIKit
@@ -59,3 +59,4 @@ extension CoreDataService {
     }
     
 }
+
