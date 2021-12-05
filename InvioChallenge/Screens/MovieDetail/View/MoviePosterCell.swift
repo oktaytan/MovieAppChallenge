@@ -155,6 +155,6 @@ final class MoviePosterCell: BaseCell {
         wrapStackView.addArrangedSubview(movieRating)
         addSubview(wrapStackView)
         
-        wrapStackView.anchor(top: moviePoster.topAnchor, bottom: moviePoster.bottomAnchor, leading: moviePoster.trailingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
+        wrapStackView.anchor(top: moviePoster.topAnchor, bottom: moviePoster.bottomAnchor, leading: moviePoster.trailingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 6, bottom: 0, right: 0))
     }
 }
