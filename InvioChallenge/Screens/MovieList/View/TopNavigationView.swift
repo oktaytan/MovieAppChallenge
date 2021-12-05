@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Listeleme ekranında custom navigation gösterilecek
 final class TopNavigationView: UIView {
     
     var themeMode : UIUserInterfaceStyle = .light
@@ -64,6 +65,7 @@ final class TopNavigationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Uygulamanın theme ayarı
     @objc func modeChangeTap() {
         guard let keyWindow = UIApplication.shared.connectedScenes
                                 .filter({$0.activationState == .foregroundActive})

@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Tüm collection cell'lerin miras alacağı base cell
 class BaseCell: UICollectionViewCell {
     
     override init(frame: CGRect) {

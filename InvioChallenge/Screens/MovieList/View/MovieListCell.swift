@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Filmlerin listelendiği cell
 final class MovieListCell: BaseCell {
     
     static let id = "MovieListCell"

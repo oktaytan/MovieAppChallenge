@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		660491EF275AB163005A3C4C /* BaseCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660491EE275AB163005A3C4C /* BaseCell+Extensions.swift */; };
 		660491F3275ABCD6005A3C4C /* HeaderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660491F2275ABCD6005A3C4C /* HeaderListCell.swift */; };
 		6612DCA5275C0F7B00FDBABF /* MovieList+SearchBarDelegation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6612DCA4275C0F7B00FDBABF /* MovieList+SearchBarDelegation.swift */; };
 		662075872757808A0021D251 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662075862757808A0021D251 /* AppRouter.swift */; };
@@ -52,7 +51,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		660491EE275AB163005A3C4C /* BaseCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseCell+Extensions.swift"; sourceTree = "<group>"; };
 		660491F2275ABCD6005A3C4C /* HeaderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderListCell.swift; sourceTree = "<group>"; };
 		6612DCA4275C0F7B00FDBABF /* MovieList+SearchBarDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieList+SearchBarDelegation.swift"; sourceTree = "<group>"; };
 		662075862757808A0021D251 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 		660491ED275AB147005A3C4C /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				660491EE275AB163005A3C4C /* BaseCell+Extensions.swift */,
 				6612DCA4275C0F7B00FDBABF /* MovieList+SearchBarDelegation.swift */,
 				66A91718275CEC8800D34DD0 /* MovieList+Setup.swift */,
 			);
@@ -464,7 +461,6 @@
 				66642CDD275D54DF000B7DC6 /* MovieDetailView+Setup.swift in Sources */,
 				66EFD4DD27590BBB00786646 /* MovieListCell.swift in Sources */,
 				6620758A275781470021D251 /* MovieListBuilder.swift in Sources */,
-				660491EF275AB163005A3C4C /* BaseCell+Extensions.swift in Sources */,
 				662076272758127C0021D251 /* MovieDetailViewModel.swift in Sources */,
 				662075A0275790250021D251 /* EndPoints.swift in Sources */,
 				66BD4C09275B98D000F614C6 /* DetailCell.swift in Sources */,

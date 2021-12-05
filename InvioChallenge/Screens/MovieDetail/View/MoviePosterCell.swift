@@ -7,6 +7,10 @@
 
 import UIKit
 
+/*
+ * Detay ekranında navigation view'ın altında görüntülenecek alan
+ * Filme ait poster, puan, film süresi, filmin gösterime girdiği yıl bilgilerini kapsıyor
+ */
 final class MoviePosterCell: BaseCell {
     
     static let id = "MoviePosterCell"

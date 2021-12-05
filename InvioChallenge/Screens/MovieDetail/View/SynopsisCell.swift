@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Filmin konusunu gösterecek view
 final class SynopsisCell: BaseCell {
     
     static let id = "SynopsisCell"

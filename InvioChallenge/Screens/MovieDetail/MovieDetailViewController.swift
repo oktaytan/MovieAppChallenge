@@ -7,12 +7,17 @@
 
 import UIKit
 
+/*
+ * Filme ait detay ekranı
+ */
 final class MovieDetailViewController: UICollectionViewController {
     
     var viewModel: MovieDetailViewModel! {
         didSet {
             guard let vm = viewModel else { return }
             if let id = vm.movieID {
+                // View Model sınıfından bir instance yaratıldığında MoviDetailBuilder'ın
+                // gönderdiği movie ID ile o filme ait detayları getiriyor.
                 self.viewModel.fetchMovieDetail(id: id)
             }
         }

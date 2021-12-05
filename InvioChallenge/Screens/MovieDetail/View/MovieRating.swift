@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Filme ait IMDB puanını ekranda yıldız olarak gösterecek view
 final class MovieRating: UIStackView {
     
     var rating: Double = 0 {
@@ -38,6 +39,8 @@ final class MovieRating: UIStackView {
 
 // MARK: - Local functions
 extension MovieRating {
+    
+    // Servisten String olarak dönen IMDB puanını INT yapacak ve 5 yıldlz üzerinden kaç aldığını hesaplayacak
     fileprivate func calcRate(at rating: Double) {
         let rate = round(rating / 2)
         for (index, item) in subviews.enumerated() {
@@ -49,6 +52,7 @@ extension MovieRating {
         }
     }
     
+    // 5 adet yıldız UIImageView'i yaratacak
     fileprivate func setStar() {
         for _ in 0...4  {
             let star = UIImageView()

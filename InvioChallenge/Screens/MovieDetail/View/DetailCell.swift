@@ -7,6 +7,11 @@
 
 import UIKit
 
+/*
+ * Filme ait diğer detay biligileri ekranda görüntüleyecek custom cell
+ * Fimin yönetmeni, senaryo yazarı, oyuncuları,
+ * Filmin kategorisini, hangi ülkeye ait olduğunu ve aldığı ödülleri barındırıyor
+ */
 final class DetailCell: BaseCell {
     
     static let id = "MovieDetailCell"

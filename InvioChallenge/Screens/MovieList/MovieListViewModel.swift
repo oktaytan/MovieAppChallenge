@@ -12,8 +12,13 @@ class MovieListViewModel {
     private var service: NetworkService!
     private var userDefaults = UserDefaults.standard
 
+    // Loading'in durumunu servisten gelen cevaba göre view'e gönderecek
     var updateIsLoading: (() -> ())?
+    
+    // Servisten film datası geldiğinde collectionView'i reload edecek
     var reloadTableViewClosure: (() -> ())?
+    
+    // Servisten hata dönmesi durumunda view'da hata yazısı göstermesini için view'e haber verecek
     var updateHasError: ((CustomError) -> ())?
     
     private(set) var isLoading: Bool = false {
@@ -42,6 +47,7 @@ class MovieListViewModel {
         }
     }
     
+    // Arama yapılan filmleri getiriyor
     func fetchMovies(title: String) {
         self.isLoading = true
         
@@ -67,6 +73,7 @@ class MovieListViewModel {
         
     }
     
+    // Arama yapılan filmlerin posterlerini getiriyor
     func fetchMoviePoster(urlString: String, completion: @escaping (UIImage) -> Void) {
         app.service.fetchMoviePoster(urlString: urlString) { image, error in
             if let _ = error {

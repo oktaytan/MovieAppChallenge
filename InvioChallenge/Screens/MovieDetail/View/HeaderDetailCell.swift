@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Detay ekranında görüntülenecek custom navigation
 class HeaderDetailCell: BaseCell {
     
     static let id = "HeaderDetailCell"

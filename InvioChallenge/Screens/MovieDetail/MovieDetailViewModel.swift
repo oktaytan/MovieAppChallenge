@@ -7,14 +7,22 @@
 
 import UIKit
 
+/*
+ * Detay ekranına ait View Model
+ */
 class MovieDetailViewModel: NSObject {
     
     var movieID: String?
     
     private(set) var posterCellInfo: PosterCellInfo?
     
+    // Loading'in durumunu servisten gelen cevaba göre view'e gönderecek
     var updateIsLoading: (() -> ())?
+    
+    // Servisten film datası geldiğinde collectionView'i reload edecek
     var reloadTableViewClosure: (() -> ())?
+    
+    // Servisten hata dönmesi durumunda view'da hata yazısı göstermesini için view'e haber verecek
     var updateHasError: ((CustomError) -> ())?
     
     private(set) var isLoading: Bool = false {
@@ -41,6 +49,7 @@ class MovieDetailViewModel: NSObject {
         super.init()
     }
     
+    // Filmin detaylarını servisten getiriyor
     func fetchMovieDetail(id: String) {
         self.isLoading = true
         
@@ -60,6 +69,7 @@ class MovieDetailViewModel: NSObject {
         }
     }
     
+    // Filmin posterini servisten getiriyor
     func fetchMoviePoster(urlString: String, completion: @escaping (UIImage) -> Void) {
         app.service.fetchMoviePoster(urlString: urlString) { image, error in
             if let _ = error {

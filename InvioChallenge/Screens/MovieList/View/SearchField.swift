@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Kullanıcının film araması için searchbar
 final class SearchField: UISearchBar  {
     
     init() {

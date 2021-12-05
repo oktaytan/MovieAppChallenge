@@ -43,8 +43,11 @@ extension MovieListViewController: UICollectionViewDelegateFlowLayout {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieListCell.id, for: indexPath) as? MovieListCell else { return UICollectionViewCell() }
         
+        // ViewModel'dan index'e ait movie datasını alıp cell'e gönderiyor
         let movie = self.viewModel.getMovie(at: indexPath.item)
         cell.movie = movie
+        
+        // Bu index'e ait filmin posterini API'den çekiyor.
         viewModel.fetchMoviePoster(urlString: movie.poster) { image in
             cell.moviePoster.image = image
         }

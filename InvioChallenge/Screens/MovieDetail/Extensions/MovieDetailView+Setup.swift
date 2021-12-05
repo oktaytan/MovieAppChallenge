@@ -11,6 +11,8 @@ extension MovieDetailViewController {
     
     func setupView() {
         view.backgroundColor = .white
+        
+        // CollectionView'da gösterilecek custom görünümler
         collectionView.register(HeaderDetailCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderDetailCell.id)
         collectionView.register(MoviePosterCell.self, forCellWithReuseIdentifier: MoviePosterCell.id)
         collectionView.register(SynopsisCell.self, forCellWithReuseIdentifier: SynopsisCell.id)
@@ -26,6 +28,7 @@ extension MovieDetailViewController {
     func setupLayout() {
         loadingView.centerWithSuperview()
         loadingView.isHidden = true
+        
         notFoundView.centerWithSuperview(size: .init(width: self.view.bounds.width, height: 100))
         notFoundView.isHidden = true
     }

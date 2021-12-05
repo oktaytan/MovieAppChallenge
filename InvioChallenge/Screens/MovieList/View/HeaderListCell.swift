@@ -7,6 +7,10 @@
 
 import UIKit
 
+/*
+ * Listeleme ekranında filmlerin üzerinde görüntülenecek view
+ * TopNavigationView, Welcome alanı ve search alanını kapsıyor
+ */
 final class HeaderListCell: BaseCell {
     
     static let id = "HeaderListCell"
@@ -117,6 +121,7 @@ extension HeaderListCell: UISearchBarDelegate {
         setSearchButtonAnimation(searchText)
     }
     
+    // Arama için kullanıcı search alanına dokunduğunda görünümü güncelleyecek
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.setShowsCancelButton(true, animated: true)
         delegate?.searchBegin()
@@ -141,6 +146,7 @@ extension HeaderListCell: UISearchBarDelegate {
         return true
     }
     
+    // Kullanıcı arama işlemini iptal ettiğinde görünümü ilk haline getirecek
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         delegate?.searchEnd()
         self.closeSearch(searchBar)
@@ -177,6 +183,7 @@ extension HeaderListCell: UISearchBarDelegate {
         }
     }
     
+    // Kullanıcı search alanına yazmaya başladığında searchbar'ın altında arama butonu belirecek
     func setSearchButtonAnimation(_ text: String) {
         if text.count > 0 {
             UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) { [weak self] in

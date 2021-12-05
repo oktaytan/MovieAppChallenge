@@ -8,6 +8,10 @@
 import UIKit
 import NVActivityIndicatorView
 
+/*
+ * Ekranda gösterilecek loading
+ * NVActivityIndicatorView framework'ü kullanıldı.
+ */
 final class LoadingIndicatorView: UIStackView {
     
     var isLoading: Bool = false {

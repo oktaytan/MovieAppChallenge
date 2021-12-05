@@ -7,6 +7,9 @@
 
 import UIKit
 
+/*
+ * Kullanıcını aradığı film bulunamadığında ekranda gösterilecek uyarı
+ */
 final class MovieNotFoundView: UIView {
     
     init() {
@@ -15,6 +18,7 @@ final class MovieNotFoundView: UIView {
         setupLayout()
     }
     
+    // Uyarı sembolü
     lazy var notSymbol: UIImageView = {
         let largeFont = UIFont.systemFont(ofSize: 40)
         let configuration = UIImage.SymbolConfiguration(font: largeFont)
@@ -24,6 +28,7 @@ final class MovieNotFoundView: UIView {
         return view
     }()
     
+    // Uyarı yazısı
     lazy var notFoundText: UILabel = {
         let label = UILabel()
         label.text = "Movie Not Found!"

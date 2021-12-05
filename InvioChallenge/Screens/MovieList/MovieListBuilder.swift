@@ -7,6 +7,10 @@
 
 import UIKit
 
+/*
+ * MovieListBuilder - Listeleme ekranını yaratacak
+ * ViewModel nesnesini pass edecek
+ */
 final class MovieListBuilder {
     
     static func make() -> MovieListViewController {
