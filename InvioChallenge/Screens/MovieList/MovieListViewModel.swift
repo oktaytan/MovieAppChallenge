@@ -13,8 +13,8 @@ class MovieListViewModel {
 
     var updateIsLoading: (() -> ())?
     var reloadTableViewClosure: (() -> ())?
-    var updatePoster: ((UIImage) -> ())?
     var updateHasError: ((CustomError) -> ())?
+    var updateSearchEnd: (() -> ())?
     
     private(set) var isLoading: Bool = false {
         didSet {
@@ -28,16 +28,16 @@ class MovieListViewModel {
         }
     }
     
-    private(set) var moviePoster: UIImage? = nil {
-        didSet {
-            
-        }
-    }
-    
     private(set) var hasError: CustomError? {
         didSet {
             guard let error = hasError else { return }
             self.updateHasError?(error)
+        }
+    }
+    
+    var isSearching: Bool = false {
+        didSet {
+            self.updateSearchEnd?()
         }
     }
     
@@ -54,7 +54,6 @@ class MovieListViewModel {
             guard let self = self else { return }
             
             self.isLoading = false
-            
             switch search {
             case .success(let response):
                 if let movies = response.results {

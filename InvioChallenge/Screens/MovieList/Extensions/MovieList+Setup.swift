@@ -50,12 +50,8 @@ extension MovieListViewController {
                 cell.isHidden = true
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                 self.notFoundView.isHidden = true
-                self.collectionView.subviews.forEach { item in
-                    guard let cell = item as? MovieListCell else { return }
-                    cell.isHidden = false
-                }
             }
         }
         

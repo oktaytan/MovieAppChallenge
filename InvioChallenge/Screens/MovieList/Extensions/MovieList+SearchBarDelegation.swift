@@ -10,6 +10,7 @@ import UIKit
 extension MovieListViewController: SearchBarActiveDelegation {
     
     func searchBegin() {
+        self.viewModel.isSearching = true
         collectionView.isScrollEnabled = false
         notFoundView.isHidden = true
         loadingView.isHidden = true
@@ -21,6 +22,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     }
     
     func searchEnd() {
+        self.viewModel.isSearching = false
         collectionView.isScrollEnabled = true
         collectionView.subviews.forEach { item in
             if let cell = item as? MovieListCell {
@@ -40,7 +42,21 @@ extension MovieListViewController: SearchBarActiveDelegation {
         
         self.viewModel.fetchMovies(title: title)
         self.fetchData()
-        listTitle.text = "Recently search"
+        listTitle.text = "Search results"
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5.5) {
+            if self.viewModel.isSearching {
+                self.collectionView.subviews.forEach { item in
+                    guard let cell = item as? MovieListCell else { return }
+                    cell.isHidden = true
+                }
+            } else {
+                self.collectionView.subviews.forEach { item in
+                    guard let cell = item as? MovieListCell else { return }
+                    cell.isHidden = false
+                }
+            }
+        }
+        
     }
     
     @objc func endingSearch() {
