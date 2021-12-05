@@ -47,11 +47,10 @@
 		66EFD4D52759033D00786646 /* LoadingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4D42759033D00786646 /* LoadingIndicatorView.swift */; };
 		66EFD4DB27590B3700786646 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4DA27590B3700786646 /* BaseCell.swift */; };
 		66EFD4DD27590BBB00786646 /* MovieListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66EFD4DC27590BBB00786646 /* MovieListCell.swift */; };
-		6A9A402865AE1D930E4D6F45 /* Pods_InvioChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C159E875628B2E6466F22D35 /* Pods_InvioChallenge.framework */; };
+		AD01507334E1F9CF9EE29F6B /* Pods_InvioChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E513378E5F24544F17BD4A /* Pods_InvioChallenge.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		22C77E23D8D48F74874D9310 /* Pods-InvioChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvioChallenge.release.xcconfig"; path = "Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge.release.xcconfig"; sourceTree = "<group>"; };
 		660491EE275AB163005A3C4C /* BaseCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BaseCell+Extensions.swift"; sourceTree = "<group>"; };
 		660491F2275ABCD6005A3C4C /* HeaderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderListCell.swift; sourceTree = "<group>"; };
 		6612DCA4275C0F7B00FDBABF /* MovieList+SearchBarDelegation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MovieList+SearchBarDelegation.swift"; sourceTree = "<group>"; };
@@ -94,8 +93,9 @@
 		66EFD4D42759033D00786646 /* LoadingIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorView.swift; sourceTree = "<group>"; };
 		66EFD4DA27590B3700786646 /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		66EFD4DC27590BBB00786646 /* MovieListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListCell.swift; sourceTree = "<group>"; };
-		67C211053FA29FECB8F144CC /* Pods-InvioChallenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvioChallenge.debug.xcconfig"; path = "Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge.debug.xcconfig"; sourceTree = "<group>"; };
-		C159E875628B2E6466F22D35 /* Pods_InvioChallenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvioChallenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7E513378E5F24544F17BD4A /* Pods_InvioChallenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InvioChallenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C085E7E3632551FFD480AFA6 /* Pods-InvioChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvioChallenge.release.xcconfig"; path = "Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge.release.xcconfig"; sourceTree = "<group>"; };
+		F2C150ADF05CFE6E13821A48 /* Pods-InvioChallenge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InvioChallenge.debug.xcconfig"; path = "Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,26 +103,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A9A402865AE1D930E4D6F45 /* Pods_InvioChallenge.framework in Frameworks */,
+				AD01507334E1F9CF9EE29F6B /* Pods_InvioChallenge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		382A087FE704E0ECAA45D1CC /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				C159E875628B2E6466F22D35 /* Pods_InvioChallenge.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		5C4980D786B168A3160EE8F3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				67C211053FA29FECB8F144CC /* Pods-InvioChallenge.debug.xcconfig */,
-				22C77E23D8D48F74874D9310 /* Pods-InvioChallenge.release.xcconfig */,
+				F2C150ADF05CFE6E13821A48 /* Pods-InvioChallenge.debug.xcconfig */,
+				C085E7E3632551FFD480AFA6 /* Pods-InvioChallenge.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -206,7 +198,7 @@
 				6662FFDA2756A0F600689B4F /* InvioChallenge */,
 				6662FFD92756A0F600689B4F /* Products */,
 				5C4980D786B168A3160EE8F3 /* Pods */,
-				382A087FE704E0ECAA45D1CC /* Frameworks */,
+				C539463E41A84096251D24EB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -305,6 +297,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		C539463E41A84096251D24EB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A7E513378E5F24544F17BD4A /* Pods_InvioChallenge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -312,11 +312,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6662FFEF2756A0FB00689B4F /* Build configuration list for PBXNativeTarget "InvioChallenge" */;
 			buildPhases = (
-				C94D4023251FE8ECD73BE247 /* [CP] Check Pods Manifest.lock */,
+				DFB3841F6B4990E3889D0077 /* [CP] Check Pods Manifest.lock */,
 				6662FFD42756A0F600689B4F /* Sources */,
 				6662FFD52756A0F600689B4F /* Frameworks */,
 				6662FFD62756A0F600689B4F /* Resources */,
-				8C47349EE5F68CD058927BFA /* [CP] Embed Pods Frameworks */,
+				C4CC0F700889F6D5ED280DC1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -373,7 +373,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8C47349EE5F68CD058927BFA /* [CP] Embed Pods Frameworks */ = {
+		C4CC0F700889F6D5ED280DC1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -390,7 +390,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-InvioChallenge/Pods-InvioChallenge-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C94D4023251FE8ECD73BE247 /* [CP] Check Pods Manifest.lock */ = {
+		DFB3841F6B4990E3889D0077 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -592,7 +592,7 @@
 		};
 		6662FFF02756A0FB00689B4F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67C211053FA29FECB8F144CC /* Pods-InvioChallenge.debug.xcconfig */;
+			baseConfigurationReference = F2C150ADF05CFE6E13821A48 /* Pods-InvioChallenge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -621,7 +621,7 @@
 		};
 		6662FFF12756A0FB00689B4F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 22C77E23D8D48F74874D9310 /* Pods-InvioChallenge.release.xcconfig */;
+			baseConfigurationReference = C085E7E3632551FFD480AFA6 /* Pods-InvioChallenge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

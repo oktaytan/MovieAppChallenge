@@ -20,7 +20,13 @@ final class HeaderListCell: BaseCell {
     
     lazy var listTitle: UILabel = {
         let label = UILabel()
-        label.text = "Recently Searches"
+        
+        if let _ = userDefaults.value(forKey: app.userDefaultsKey) {
+            label.text = "Recently search"
+        } else {
+            label.text = "Search results"
+        }
+        
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = .textColor
         if let lastSearch = userDefaults.value(forKey: app.userDefaultsKey) as? String {
@@ -142,9 +148,11 @@ extension HeaderListCell: UISearchBarDelegate {
     
     func closeSearch(_ searchBar: UISearchBar) {
         delegate?.searchEnd()
+
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.searchTextField.resignFirstResponder()
         searchBar.searchTextField.text = ""
+        
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: { [self] in
             searchFieldTopAnchor?.isActive = false
             searchFieldTopAnchor = searchField.topAnchor.constraint(equalTo: welcomeText.bottomAnchor, constant: 11)

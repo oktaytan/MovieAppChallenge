@@ -13,9 +13,7 @@ final class NetworkService {
     
     private let apiKey = "4ab16e2b"
     
-    private init() {
-        
-    }
+    private init() { }
     
     static var sharedInstance: NetworkService = {
         return NetworkService()

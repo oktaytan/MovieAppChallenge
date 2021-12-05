@@ -13,7 +13,11 @@ class MovieListViewModel {
     
     private(set) var movies: [Movie] = []
     var updateFetchStatus: (() -> ())?
-    private(set) var hasError: CustomError?
+    private(set) var hasError: CustomError? {
+        didSet {
+            self.updateFetchStatus?()
+        }
+    }
     
     private(set) var isLoading: Bool = false {
         didSet {
@@ -55,11 +59,9 @@ class MovieListViewModel {
             
             switch search {
             case .success(let response):
-                if let movies = response.results  {
-                    if movies.count > 0 {
-                        self.userDefaults.set(title, forKey: app.userDefaultsKey)
-                        self.movies = movies
-                    }
+                if let movies = response.results {
+                    self.userDefaults.set(title, forKey: app.userDefaultsKey)
+                    self.movies = movies
                 } else {
                     if let error = response.error {
                         self.hasError = CustomError(description: error)
@@ -69,6 +71,8 @@ class MovieListViewModel {
                 self.hasError = CustomError(description: error.localizedDescription)
             }
         }
+        
+        
     }
     
     func fetchMoviePoster(urlString: String, completion: @escaping (UIImage) -> Void) {

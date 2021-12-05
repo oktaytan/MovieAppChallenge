@@ -32,6 +32,7 @@ extension MovieListViewController: SearchBarActiveDelegation {
     func searchButtonTap(title: String, listTitle: UILabel) {
         
         endingSearch()
+        self.notFoundView.isHidden = true
         collectionView.subviews.forEach { item in
             guard let cell = item as? MovieListCell else { return }
             cell.isHidden = true
@@ -40,14 +41,14 @@ extension MovieListViewController: SearchBarActiveDelegation {
         self.viewModel.fetchMovies(title: title)
         self.viewModel.updateFetchStatus = {
             self.loadingView.isLoading = self.viewModel.isLoading
+            
             if let error = self.viewModel.hasError?.description {
                 DispatchQueue.main.async {
                     self.notFoundView.isHidden = false
                     self.notFoundView.notFoundText.text = error.description
-                    print(error)
                     self.collectionView.subviews.forEach { item in
                         guard let cell = item as? MovieListCell else { return }
-                        cell.isHidden = false
+                        cell.isHidden = true
                     }
                     self.collectionView.reloadData()
                 }
