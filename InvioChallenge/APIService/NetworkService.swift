@@ -11,7 +11,7 @@ import AlamofireImage
 
 final class NetworkService {
     
-    private let apiKey = "4ab16e2b"
+    private let apiKey = "{YOUR_API_KEY}"
     
     private init() { }
     
